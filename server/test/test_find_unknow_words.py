@@ -1,8 +1,3 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath('./src'))
-
-
 import unittest
 from find_unknow_words import * 
 class TestWord(unittest.TestCase):
