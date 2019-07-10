@@ -35,11 +35,11 @@ class TestDbModel(unittest.TestCase):
         self.assertEqual(unKnowWords,[])
 
         # should correctly insert word
-        self.model.insert_know_word_by_id("mockId1",["apple","juice"])
+        self.model.mark_know_word_by_id("mockId1",["apple","juice"])
         knowWords = self.model.get_all_know_word_by_id("mockId1")
         self.assertEqual(knowWords,["apple","juice"])
 
-        self.model.insert_unknow_word_by_id("mockId1",["apple1","juice1"])
+        self.model.mark_unknow_word_by_id("mockId1",["apple1","juice1"])
         unKnowWords = self.model.get_all_unknow_word_by_id("mockId1")
         self.assertEqual(unKnowWords,["apple1","juice1"])
 
@@ -48,15 +48,18 @@ class TestDbModel(unittest.TestCase):
         self.assertEqual(knowWords,[])
         unKnowWords = self.model.get_all_unknow_word_by_id("mockId2")
         self.assertEqual(unKnowWords,[])
+        # switch know unknow
+        self.model.mark_know_word_by_id("mockId3",["apple","juice"])
+        knowWords = self.model.get_all_know_word_by_id("mockId3")
+        self.assertEqual(knowWords,["apple","juice"])
 
-        # should correctly replace word
-        self.model.replace_know_word_by_id("mockId1",[])
-        knowWords = self.model.get_all_know_word_by_id("mockId1")
-        self.assertEqual(knowWords,[])
+        self.model.mark_unknow_word_by_id("mockId3",["apple"])
+        unKnowWords = self.model.get_all_unknow_word_by_id("mockId3")
+        self.assertEqual(unKnowWords,["apple"])
 
-        self.model.replace_unknow_word_by_id("mockId1",[])
-        unKnowWords = self.model.get_all_unknow_word_by_id("mockId1")
-        self.assertEqual(unKnowWords,[])
+        knowWords = self.model.get_all_know_word_by_id("mockId3")
+        self.assertEqual(knowWords,["juice"])
+
         pass
 
 
