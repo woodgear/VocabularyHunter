@@ -21,5 +21,4 @@ class Controller:
         unknow = find_unknow_word(tokens(article),know_words)
         return unknow
         pass
-    
 

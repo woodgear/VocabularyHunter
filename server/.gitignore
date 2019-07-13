@@ -1,2 +1,5 @@
 __pycache__
 db_storage
+ECDICT/*.csv
+ECDICT/*.txt
+ECDICT/*.sqlite
