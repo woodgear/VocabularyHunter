@@ -1,0 +1,10 @@
+.vh-hunter-input {
+    width: 500px;
+    height: 500px;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+}
+.vh-hunter-input-text {
+    height: 80vh;
+}

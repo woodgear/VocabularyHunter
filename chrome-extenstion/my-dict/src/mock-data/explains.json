@@ -1,0 +1,71 @@
+[
+    {
+        "explain": {
+            "audio": "",
+            "collins": 3,
+            "definitions": [
+                "n. fruit with red or yellow or green skin and sweet to tart crisp whitish flesh",
+                "n. native Eurasian tree widely cultivated in many varieties for its firm rounded edible fruits"
+            ],
+            "exchange": {
+                "0": "apple",
+                "l": "0",
+                "s": "apples"
+            },
+            "frq": 2695,
+            "name": "apple",
+            "oxford": 1,
+            "phonetic": "'æpl",
+            "pos": {
+                "n": "100"
+            },
+            "tags": [
+                "zk",
+                "gk"
+            ],
+            "translations": [
+                "n. 苹果, 家伙",
+                "[医] 苹果"
+            ]
+        },
+        "know_type": "know",
+        "name": "apple"
+    },
+    {
+        "explain": {
+            "audio": "",
+            "collins": 3,
+            "definitions": [
+                "a. concerned with actual use or practice",
+                "s. having or put to a practical purpose or use"
+            ],
+            "exchange": {
+                "0": "practical",
+                "l": "0",
+                "s": "practicals"
+            },
+            "frq": 2281,
+            "name": "practical",
+            "oxford": 1,
+            "phonetic": "'præktikl",
+            "pos": {
+                "j": "99",
+                "n": "1"
+            },
+            "tags": [
+                "gk",
+                "cet4",
+                "cet6",
+                "ky",
+                "toefl",
+                "ielts"
+            ],
+            "translations": [
+                "a. 实际的, 现实的, 实用性的",
+                "[法] 事实上的, 实际上的, 接近...的"
+            ]
+        },
+        "know_type": null,
+        "name": "practical"
+    }
+]

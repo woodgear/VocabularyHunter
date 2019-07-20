@@ -1,0 +1,40 @@
+
+.dict-container {
+    height: 400px;
+    width: 300px;
+    margin: 20px;
+    border: 1px solid red;
+    padding: 10px;
+    display:flex;
+    flex-direction: column
+}
+.word-header {
+    max-height:36px;    
+    display:flex;
+}
+.word-exchange {
+    display: flex;
+}    
+.word-exchange span {
+    margin-right: 10px;
+}
+.word-name {
+    margin-right: 20px;
+}
+.word-phonetic {
+    display: inline-flex;
+    margin-right: 10px;
+}
+.word-explain-zh {
+border-bottom: 1px solid green
+}
+
+.word-explain-container {
+border-bottom: 1px solid black;
+height: 300px;
+}
+
+.vh-actions {
+    display: flex;
+    justify-content: center;
+}
