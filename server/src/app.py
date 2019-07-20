@@ -1,6 +1,5 @@
 from flask import *
 from controler import *
-from dicthelper import DictHelper
 import json
 
 app = Flask(__name__)
@@ -42,7 +41,8 @@ def export_know_word():
 
 @app.route('/explain',methods=['POST'])
 def get_word_explain():
+    print("get_word_explain")
     id = request.headers.get('id')
     words = request.json["words"]
-    res = DictHelper().describes(words)
+    res = Controller().describes(id,words)
     return jsonify(util.to_json_serializable(res))
