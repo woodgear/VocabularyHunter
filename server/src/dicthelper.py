@@ -50,7 +50,7 @@ class DictHelper:
         pass
     def describes(self,words):
         explains = [self.describe(w) for w in words]
-        return {e.name:e for e in explains }
+        return explains
         pass
     def describe(self,word):
         explain = self.sd.query(word)
