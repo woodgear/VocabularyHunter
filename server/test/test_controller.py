@@ -21,14 +21,14 @@ class Test(unittest.TestCase):
         expect_output = [
             {
                 "name": "apple",
-                "explains": {
+                "explain": {
                     "name": "apple",
                 },
                 "know_type":None
             },
             {
                 "name": "tree",
-                "explains": {
+                "explain": {
                     "name": "tree",
                 },
                 "know_type":None
@@ -53,14 +53,14 @@ class Test(unittest.TestCase):
         expect_output = [
             {
                 "name": "apple",
-                "explains": {
+                "explain": {
                     "name": "apple",
                 },
                 "know_type":"know"
             },
             {
                 "name": "tree",
-                "explains": {
+                "explain": {
                     "name": "tree",
                 },
                 "know_type":"unknow"

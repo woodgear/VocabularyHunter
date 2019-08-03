@@ -1,9 +1,10 @@
 from flask import *
 from controler import *
 import json
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/hunter',methods=['POST'])
 def hunter():

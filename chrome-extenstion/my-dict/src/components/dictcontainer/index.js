@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import MockExplain from "../../mock-data/explains";
 import "./index.css";
 
 // const defaultProps =
@@ -10,7 +9,7 @@ export default class DictContainer extends Component {
     currentIndex: PropTypes.number
   };
   static defaultProps = {
-    explains: MockExplain,
+    explains: [],
     currentIndex: 0
   };
 
@@ -29,6 +28,7 @@ export default class DictContainer extends Component {
       currentIndex: commingIndex
     });
   }
+
   onClickNext() {
     const commingIndex =
       (this.state.currentIndex + 1 + this.props.explains.length) %
@@ -37,18 +37,23 @@ export default class DictContainer extends Component {
       currentIndex: commingIndex
     });
   }
+
   renderWordExchange(exchange) {
-    return (
-      <div className="word-exchange">
-        {Object.entries(exchange).map(([e_type, word]) => {
-          return (
-            <span key={e_type}>
-              {e_type}:{word}
-            </span>
-          );
-        })}
-      </div>
-    );
+    if (exchange) {
+      return (
+        <div className="word-exchange">
+          {Object.entries(exchange).map(([e_type, word]) => {
+            return (
+              <span key={e_type}>
+                {e_type}:{word}
+              </span>
+            );
+          })}
+        </div>
+      );  
+    }else {
+      return 
+    }
   }
 
   renderWordHead(name, phonetic, knowType) {
@@ -91,6 +96,14 @@ export default class DictContainer extends Component {
   }
 
   render() {
+    if (this.props.explains.length===0) {
+      return (
+        <div className="dict-container">
+          <p>暂无数据</p>
+        </div>
+        )
+    }
+
     const currentWord = this.props.explains[this.state.currentIndex];
     return (
       <div className="dict-container">

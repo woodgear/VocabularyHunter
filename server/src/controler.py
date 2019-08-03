@@ -51,7 +51,7 @@ class Controller:
         unknow_words_set = set(unknow_words)
         know_type_map = {w: get_know_type(
             w, know_words_set, unknow_words_set) for w in words}
-        print("_describes")
-        [print(e.name) for e in explains]
-        return [{"name": e.name, "explain": e, "know_type": know_type_map[e.name]} for e in explains]
+        print("_describes",explains)
+        [print(e,e["name"]) for e in explains]
+        return [{"name": e["name"], "explain": e, "know_type": know_type_map[e["name"]]} for e in explains]
         pass

@@ -7,6 +7,12 @@ class TestWord(unittest.TestCase):
         print(self.id())
         db_e =  {'phonetic': "'æpl", 'definition': '', 'translation': '', 'pos': 'n:100', 'collins': 3, 'oxford': 1, 'tag': 'zk gk', 'bnc': 2446, 'frq': 2695, 'exchange': "", 'detail': None, 'audio': ''}
         explain  = WordExplain("apple",db_e)
+        self.assertEqual(explain.name, "apple")
+        self.assertEqual(explain["name"], "apple")
+
+        db_e =  {'phonetic': "'æpl", 'definition': '', 'translation': '', 'pos': '', 'collins': 3, 'oxford': 1, 'tag': 'zk gk', 'bnc': 2446, 'frq': 2695, 'exchange': "", 'detail': None, 'audio': ''}
+        explain  = WordExplain("apple",db_e)
+
         print(explain,to_json_serializable(explain))
 
 
