@@ -28,11 +28,26 @@ class Api {
     }
 
     async markAsKnow(id, words) {
-        console.log("not yet")
+        return fetch(`${SERVER_URL}/mark/know`, {
+            method: "POST",
+            headers: {
+                id,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ words })
+        })
     }
 
     async markAsUnKnow(id, words) {
-        console.log("not yet")
+        return fetch(`${SERVER_URL}/mark/unknow`, {
+            method: "POST",
+            headers: {
+                id,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ words })
+        })
+
     }
 }
 

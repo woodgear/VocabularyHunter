@@ -4,7 +4,7 @@ import "./index.css";
 
 export default class VocabularyHunterInput extends Component {
   static propTypes = {
-    rawArticle: PropTypes.arrayOf(PropTypes.object),
+    rawArticle: PropTypes.string,
     //TODO
   };
 

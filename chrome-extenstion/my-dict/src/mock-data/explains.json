@@ -1,71 +1,333 @@
 [
-    {
-        "explain": {
-            "audio": "",
-            "collins": 3,
-            "definitions": [
-                "n. fruit with red or yellow or green skin and sweet to tart crisp whitish flesh",
-                "n. native Eurasian tree widely cultivated in many varieties for its firm rounded edible fruits"
-            ],
-            "exchange": {
-                "0": "apple",
-                "l": "0",
-                "s": "apples"
-            },
-            "frq": 2695,
-            "name": "apple",
-            "oxford": 1,
-            "phonetic": "'æpl",
-            "pos": {
-                "n": "100"
-            },
-            "tags": [
-                "zk",
-                "gk"
-            ],
-            "translations": [
-                "n. 苹果, 家伙",
-                "[医] 苹果"
-            ]
-        },
-        "know_type": "know",
-        "name": "apple"
+  {
+    "explain": {
+      "audio": "",
+      "collins": 5,
+      "definitions": [
+        "pron., a., conj., &  As a demonstrative pronoun (pl. Those),",
+        "   that usually points out, or refers to, a person or thing previously",
+        "   mentioned, or supposed to be understood. That, as a demonstrative, may",
+        "   precede the noun to which it refers; as, that which he has said is",
+        "   true; those in the basket are good apples.",
+        "pron., a., conj., &  As an adjective, that has the same",
+        "   demonstrative force as the pronoun, but is followed by a noun.",
+        "pron., a., conj., &  As a relative pronoun, that is",
+        "   equivalent to who or which, serving to point out, and make definite, a",
+        "   person or thing spoken of, or alluded to, before, and may be either",
+        "   singular or plural.",
+        "pron., a., conj., &  As a conjunction, that retains much of",
+        "   its force as a demonstrative pronoun.",
+        "pron., a., conj., &  To introduce a clause employed as the",
+        "   object of the preceding verb, or as the subject or predicate nominative",
+        "   of a verb.",
+        "pron., a., conj., &  To introduce, a reason or cause; --",
+        "   equivalent to for that, in that, for the reason that, because.",
+        "pron., a., conj., &  To introduce a purpose; -- usually",
+        "   followed by may, or might, and frequently preceded by so, in order, to",
+        "   the end, etc.",
+        "pron., a., conj., &  To introduce a consequence, result, or",
+        "   effect; -- usually preceded by so or such, sometimes by that.",
+        "pron., a., conj., &  In an elliptical sentence to introduce",
+        "   a dependent sentence expressing a wish, or a cause of surprise,",
+        "   indignation, or the like.",
+        "pron., a., conj., &  As adverb: To such a degree; so; as, he",
+        "   was that frightened he could say nothing."
+      ],
+      "exchange": null,
+      "frq": 12,
+      "name": "that",
+      "oxford": 1,
+      "phonetic": "ðæt",
+      "pos": { "c": "66", "d": "33", "p": "1" },
+      "tags": ["zk", "gk"],
+      "translations": [
+        "a. 那, 那个",
+        "conj. 以致, 因为",
+        "pron. 那",
+        "adv. 那么, 那样"
+      ]
     },
-    {
-        "explain": {
-            "audio": "",
-            "collins": 3,
-            "definitions": [
-                "a. concerned with actual use or practice",
-                "s. having or put to a practical purpose or use"
-            ],
-            "exchange": {
-                "0": "practical",
-                "l": "0",
-                "s": "practicals"
-            },
-            "frq": 2281,
-            "name": "practical",
-            "oxford": 1,
-            "phonetic": "'præktikl",
-            "pos": {
-                "j": "99",
-                "n": "1"
-            },
-            "tags": [
-                "gk",
-                "cet4",
-                "cet6",
-                "ky",
-                "toefl",
-                "ielts"
-            ],
-            "translations": [
-                "a. 实际的, 现实的, 实用性的",
-                "[法] 事实上的, 实际上的, 接近...的"
-            ]
-        },
-        "know_type": null,
-        "name": "practical"
-    }
+ "know_type": "unknow",
+    "name": "that"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 5,
+      "definitions": [
+        "a. quantifier; used with either mass nouns or plural count nouns to indicate an unspecified number or quantity",
+        "s. relatively much but unspecified in amount or extent",
+        "s. relatively many but unspecified in number",
+        "s. remarkable"
+      ],
+      "exchange": { "0": "some", "l": "0" },
+      "frq": 60,
+      "name": "some",
+      "oxford": 1,
+      "phonetic": "sʌm",
+      "pos": { "d": "99", "p": "1" },
+      "tags": ["zk", "gk"],
+      "translations": [
+        "pron. 一些, 一部分, 若干",
+        "adv. 大约",
+        "a. 一些的, 少许的, 某一的"
+      ]
+    },
+ "know_type": "unknow",
+    "name": "some"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": null,
+      "definitions": [
+        "a. full of or characterized by loud and nonmusical sounds",
+        "s. attracting attention by showiness or bright colors"
+      ],
+      "exchange": { "0": "noisiest", "1": "t", "l": "0" },
+      "frq": 0,
+      "name": "noisiest",
+      "oxford": null,
+      "phonetic": "",
+      "pos": null,
+      "tags": [""],
+      "translations": [" noisy（嘈杂的）的最高级形式"]
+    },
+ "know_type": "unknow",
+    "name": "noisiest"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": null,
+      "definitions": [
+        "n the organization that is the governing authority of a political unit",
+        "n the power or right to give orders or make decisions",
+        "n (usually plural) persons who exercise (administrative) control over others",
+        "n an expert whose views are taken as definitive",
+        "n freedom from doubt; belief in yourself and your abilities",
+        "n an administrative unit of government",
+        "n official permission or approval",
+        "n an authoritative written work"
+      ],
+      "exchange": {
+        "0": "authorities",
+        "1": "s",
+        "l": "0",
+        "s": "authoritiess"
+      },
+      "frq": 0,
+      "name": "authorities",
+      "oxford": null,
+      "phonetic": "",
+      "pos": null,
+      "tags": [""],
+      "translations": ["n. 当局, 官方（authority的复数）"]
+    },
+ "know_type": "unknow",
+    "name": "authorities"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": null,
+      "definitions": ["imp. & p. p. of Insist"],
+      "exchange": { "0": "insisted", "1": "pd", "l": "0" },
+      "frq": 0,
+      "name": "insisted",
+      "oxford": null,
+      "phonetic": "inˈsistid",
+      "pos": null,
+      "tags": [""],
+      "translations": [
+        "v. 坚决宣称, 坚持认为( insist的过去式和过去分词 ); 坚决要求"
+      ]
+    },
+ "know_type": "unknow",
+    "name": "insisted"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 3,
+      "definitions": ["n. the state or fact of existing"],
+      "exchange": { "0": "being", "1": "i", "l": "0", "s": "beings" },
+      "frq": 1676,
+      "name": "being",
+      "oxford": null,
+      "phonetic": "'bi:iŋ",
+      "pos": { "n": "100" },
+      "tags": ["gk", "cet4", "ky"],
+      "translations": ["n. 存在, 性质, 生命, 人, 生物, be的现在分词"]
+    },
+ "know_type": "unknow",
+    "name": "being"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": null,
+      "definitions": [
+        "s. widely accepted as true or worthy; surveys show otherwise\"- Economist"
+      ],
+      "exchange": { "0": "received", "1": "dp", "l": "0" },
+      "frq": 15521,
+      "name": "received",
+      "oxford": null,
+      "phonetic": "ri'si:vd",
+      "pos": { "j": "100" },
+      "tags": [""],
+      "translations": ["a. 被一般承认的, 公认的"]
+    },
+ "know_type": "unknow",
+    "name": "received"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 5,
+      "definitions": [
+        "n. benefit",
+        "n. moral excellence or admirableness",
+        "n. that which is pleasing or valuable or useful",
+        "a. having desirable or positive qualities especially those suitable for a thing specified"
+      ],
+      "exchange": {
+        "0": "good",
+        "l": "0",
+        "r": "better",
+        "s": "goods",
+        "t": "best"
+      },
+      "frq": 110,
+      "name": "good",
+      "oxford": 1,
+      "phonetic": "gud",
+      "pos": { "j": "94", "n": "4", "r": "2" },
+      "tags": ["zk", "gk", "ielts"],
+      "translations": [
+        "n. 善行, 好处, 利益",
+        "a. 好的, 优良的, 上等的, 愉快的, 有益的, 好心的, 慈善的, 虔诚的"
+      ]
+    },
+ "know_type": "unknow",
+    "name": "good"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 3,
+      "definitions": [
+        "n. morally objectionable behavior",
+        "n. that which causes harm or destruction or misfortune; the good is oft interred with their bones\"- Shakespeare",
+        "n. the quality of being morally wrong in principle or practice",
+        "a. morally bad or wrong"
+      ],
+      "exchange": { "0": "evil", "l": "0", "s": "evils" },
+      "frq": 3447,
+      "name": "evil",
+      "oxford": 1,
+      "phonetic": "'i:vl",
+      "pos": { "j": "46", "n": "54" },
+      "tags": ["cet4", "cet6", "ky"],
+      "translations": [
+        "n. 邪恶, 不幸, 罪恶",
+        "a. 邪恶的, 不幸的, 有害的, 讨厌的"
+      ]
+    },
+ "know_type": "unknow",
+    "name": "evil"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 1,
+      "definitions": [
+        "n. an exaggerated expression (usually of praise)",
+        "n. the superlative form of an adjective or adverb"
+      ],
+      "exchange": { "0": "superlative", "l": "0", "s": "superlatives" },
+      "frq": 24360,
+      "name": "superlative",
+      "oxford": null,
+      "phonetic": "sju:'pә:lәtiv",
+      "pos": { "j": "47", "n": "53" },
+      "tags": ["gre"],
+      "translations": [
+        "a. 最上的, 无比的, 过度的",
+        "n. 最好的人(物), 最高程度, 最高级"
+      ]
+    },
+ "know_type": "unknow",
+    "name": "superlative"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 4,
+      "definitions": [
+        "n. a position on a scale of intensity or amount or quality",
+        "n. a specific identifiable position in a continuum or series or especially in a process",
+        "n. a measure for arcs and angles",
+        "n. the highest power of a term or variable"
+      ],
+      "exchange": { "0": "degree", "l": "0", "s": "degrees" },
+      "frq": 789,
+      "name": "degree",
+      "oxford": 1,
+      "phonetic": "di'gri:",
+      "pos": { "n": "100" },
+      "tags": ["zk", "gk", "cet4", "cet6", "ky", "ielts"],
+      "translations": ["n. 程度, 度数, 学位, 度", "[医] 度, 程度"]
+    },
+ "know_type": "unknow",
+    "name": "degree"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 3,
+      "definitions": [
+        "n. the act of examining resemblances",
+        "n. relation based on similarities and differences",
+        "n. qualities that are comparable"
+      ],
+      "exchange": { "0": "comparison", "l": "0", "s": "comparisons" },
+      "frq": 2166,
+      "name": "comparison",
+      "oxford": 1,
+      "phonetic": "kәm'pærisn",
+      "pos": { "n": "100" },
+      "tags": ["cet4", "ky", "gre"],
+      "translations": ["n. 比较, 对照, 比喻", "[经] 比较, 对比"]
+    },
+ "know_type": "unknow",
+    "name": "comparison"
+  },
+  {
+    "explain": {
+      "audio": "",
+      "collins": 5,
+      "definitions": [
+        "r. with nevertheless the final result",
+        "r. in the final outcome",
+        "r. except that; only this time she came out better\"",
+        "r. never except when"
+      ],
+      "exchange": null,
+      "frq": 101,
+      "name": "only",
+      "oxford": 1,
+      "phonetic": "'әunli",
+      "pos": { "j": "24", "r": "76" },
+      "tags": ["zk", "gk"],
+      "translations": [
+        "a. 唯一的, 仅有的, 最佳的",
+        "adv. 只有, 仅仅, 只能",
+        "conj. 但是, 不过"
+      ]
+    },
+ "know_type": "unknow",
+    "name": "only"
+  }
 ]

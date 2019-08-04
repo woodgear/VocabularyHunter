@@ -18,6 +18,8 @@ export default class DictContainer extends Component {
     this.state = { currentIndex: this.props.currentIndex };
     this.onClickNext = this.onClickNext.bind(this);
     this.onClickPre = this.onClickPre.bind(this);
+    this.markKnow = this.markKnow.bind(this);
+    this.markUnKnow = this.markUnKnow.bind(this);
   }
 
   onClickPre() {
@@ -37,6 +39,29 @@ export default class DictContainer extends Component {
       currentIndex: commingIndex
     });
   }
+  getCurrentWordName() {
+    if (this.state.currentIndex <= this.props.explains.length) {
+      return this.props.explains[this.state.currentIndex].explain.name;
+    }
+    return null;
+  }
+
+  async markKnow() {
+    const word = this.getCurrentWordName();
+    if (word) {
+      this.props.actions.markKnow(word);
+      this.onClickNext()
+
+    }
+  }
+
+  async markUnKnow() {
+    const word = this.getCurrentWordName();
+    if (word) {
+     await this.props.actions.markUnKnow(word);
+     this.onClickNext()
+    }
+  }
 
   renderWordExchange(exchange) {
     if (exchange) {
@@ -50,14 +75,14 @@ export default class DictContainer extends Component {
             );
           })}
         </div>
-      );  
-    }else {
-      return 
+      );
+    } else {
+      return;
     }
   }
 
   renderWordHead(name, phonetic, knowType) {
-    // const audioUrl = `http://ssl.gstatic.com/dictionary/static/sounds/oxford/${name}--_gb_1.mp3`;
+    console.log(name, phonetic, knowType);
     const knowTypeEle = (knowType => {
       if (knowType === "know") {
         return <span className="word-knowtype know">k</span>;
@@ -71,9 +96,12 @@ export default class DictContainer extends Component {
       <div className="word-header">
         <span className="word-name">{name}</span>
         <div className="word-phonetic">
-          <span>{phonetic}</span>
+          <span>[{phonetic}]</span>
         </div>
-        {knowTypeEle}
+        <div className="knowtype"><span>{knowTypeEle}</span></div>
+        <div className="word-index">
+        <span>{this.state.currentIndex+1}/{this.props.explains.length}</span>
+        </div>
       </div>
     );
   }
@@ -83,12 +111,16 @@ export default class DictContainer extends Component {
       <div className="word-explain">
         <div className="word-explain-zh">
           {explain.translations.map((e, i) => (
-            <p key={i}>{e}</p>
+            <p className="word-explain-item" key={i}>
+              {e}
+            </p>
           ))}
         </div>
         <div className="word-explain-en">
           {explain.definitions.map((e, i) => (
-            <p key={i}>{e}</p>
+            <p className="word-explain-item" key={i}>
+              {e}
+            </p>
           ))}
         </div>
       </div>
@@ -96,12 +128,12 @@ export default class DictContainer extends Component {
   }
 
   render() {
-    if (this.props.explains.length===0) {
+    if (this.props.explains.length === 0) {
       return (
-        <div className="dict-container">
+        <div className="dict-empty-container ">
           <p>暂无数据</p>
         </div>
-        )
+      );
     }
 
     const currentWord = this.props.explains[this.state.currentIndex];

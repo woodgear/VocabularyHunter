@@ -1,40 +1,74 @@
+.dict-empty-container {
+  height: 480px;
+  width: 580px;
+  min-height: 480px;
+  min-width: 480px;
+  max-height: 480px;
+  max-width: 480px;
+  margin-left: 20px;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
 
 .dict-container {
-    height: 400px;
-    width: 300px;
-    margin: 20px;
-    border: 1px solid red;
-    padding: 10px;
-    display:flex;
-    flex-direction: column
+  min-height: 480px;
+  min-width: 480px;
+  max-height: 480px;
+  max-width: 480px;
+
+  height: 480px;
+  width: 480px;
+  margin-left: 20px;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 .word-header {
-    max-height:36px;    
-    display:flex;
+  max-height: 36px;
+  display: flex;
+  /* background-color: green; */
+  border-bottom: 1px solid black;
 }
 .word-exchange {
-    display: flex;
-}    
+  display: flex;
+  border-bottom: 1px solid black;
+}
 .word-exchange span {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 .word-name {
-    margin-right: 20px;
+  margin-right: 20px;
+}
+.knowtype {
+  margin-right: 20px;
 }
 .word-phonetic {
-    display: inline-flex;
-    margin-right: 10px;
+  display: inline-flex;
+  margin-right: 10px;
 }
 .word-explain-zh {
-border-bottom: 1px solid green
+  border-bottom: 1px solid green;
+}
+.word-explain-item {
+  margin: 0;
+  padding: 0px;
 }
 
 .word-explain-container {
-border-bottom: 1px solid black;
-height: 300px;
+  overflow: auto;
+  border-bottom: 1px solid black;
+  height: 460px;
+  max-height: 460px;
+  min-height: 460px;
+  flex: 1;
 }
 
 .vh-actions {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }

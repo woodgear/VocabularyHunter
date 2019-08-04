@@ -45,7 +45,7 @@ class Controller:
                 return "know"
             if w in uk:
                 return "unknow"
-            return None
+            return "unknow"
             pass
         know_words_set = set(know_words)
         unknow_words_set = set(unknow_words)
