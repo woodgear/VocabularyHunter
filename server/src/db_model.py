@@ -1,5 +1,6 @@
 from pydal import DAL, Field
 import time as pytime
+import os
 DB_VERSION = 1
 
 class DbModel:
@@ -11,6 +12,7 @@ class DbModel:
         db: string the data base name,just to idenity.
     
     """
+
     def __init__(self,db_name="vh",folder_path="db_storage"):
         self.db_name=db_name
         self.folder_path=folder_path
@@ -21,10 +23,8 @@ class DbModel:
         pass  
 
     def _init_db(self):
-        print("init_db")
         try:
             sqlite_uri = f'sqlite://{self.db_name}.sqlite'
-            print(sqlite_uri,self.folder_path)
             self.db = DAL(sqlite_uri, folder=self.folder_path)
             self.db.define_table('word', Field('user_id'),Field('word'),Field('word_type'),Field('time'))
             self.db.define_table('meta', Field('key'),Field('value'))
@@ -33,7 +33,6 @@ class DbModel:
         except Exception as Err:
             print("err",Err)
 
-        print("init_db over")
         pass
     def get_all_unknow_word_by_id(self,id):
         """

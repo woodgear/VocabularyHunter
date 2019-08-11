@@ -32,7 +32,6 @@ class Controller:
         pass
 
     def describes(self, id, words):
-        print("describes")
         explains = DictHelper().describes(words)
         know_words = self.model.get_all_know_word_by_id(id)
         unknow_words = self.model.get_all_unknow_word_by_id(id)
@@ -45,13 +44,11 @@ class Controller:
                 return "know"
             if w in uk:
                 return "unknow"
-            return "unknow"
+            return None
             pass
         know_words_set = set(know_words)
         unknow_words_set = set(unknow_words)
         know_type_map = {w: get_know_type(
             w, know_words_set, unknow_words_set) for w in words}
-        print("_describes",explains)
-        [print(e,e["name"]) for e in explains]
         return [{"name": e["name"], "explain": e, "know_type": know_type_map[e["name"]]} for e in explains]
         pass

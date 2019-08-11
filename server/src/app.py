@@ -2,6 +2,7 @@ from flask import *
 from controler import *
 import json
 from flask_cors import CORS
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -42,8 +43,10 @@ def export_know_word():
 
 @app.route('/explain',methods=['POST'])
 def get_word_explain():
-    print("get_word_explain")
+    start_time = time.time()
     id = request.headers.get('id')
     words = request.json["words"]
     res = Controller().describes(id,words)
+    elapsed_time = time.time() - start_time
+    print(f"explain {len(words)} elapsed_time {elapsed_time*1000}")
     return jsonify(util.to_json_serializable(res))

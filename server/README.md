@@ -20,3 +20,6 @@ https://github.com/skywind3000/ECDICT
 - [] 生词 anki web 同步
 - [] 爬虫下载给定单词音频 (在常用单词表上的单词 先爬下来)
 - [] 音频接口
+
+# 重构
+- dbmodel 是否单例?

@@ -42,7 +42,7 @@ class App extends Component {
     console.log(this.state.explains);
     return (
       <div className="App">
-        <VhInput rawArticle={defaultArticle} onClickParse={this.onClickParse} />
+        {/* <VhInput rawArticle={defaultArticle} onClickParse={this.onClickParse} /> */}
         <DictContainer explains={this.state.explains} actions={this.actions} />
       </div>
     );

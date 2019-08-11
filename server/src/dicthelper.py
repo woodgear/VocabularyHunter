@@ -34,7 +34,6 @@ class WordExplain(dict):
         return str(self.__dict__)
 
     def __getattr__(self,key):
-        print("key",key)
         return self[key]
     def __setattr__(self, key, value):
         self[key] = value
@@ -68,7 +67,6 @@ class DictHelper:
         explain = self.sd.query(word)
         if explain is None:
             return None
-        print("real explain",explain)
         exchange = parse_trans_type(explain["exchange"])
         if exchange:
             if "l" in exchange:

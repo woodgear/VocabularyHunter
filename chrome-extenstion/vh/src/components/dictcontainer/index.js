@@ -130,7 +130,7 @@ export default class DictContainer extends Component {
   render() {
     if (this.props.explains.length === 0) {
       return (
-        <div className="dict-empty-container ">
+        <div className="dict-container empty">
           <p>暂无数据</p>
         </div>
       );
@@ -138,7 +138,8 @@ export default class DictContainer extends Component {
 
     const currentWord = this.props.explains[this.state.currentIndex];
     return (
-      <div className="dict-container">
+
+      <div className={this.props.explains.length===0?"dict-container empty":"dict-container has-data"}>
         <div className="word-explain-container">
           {this.renderWordHead(
             currentWord.explain.name,

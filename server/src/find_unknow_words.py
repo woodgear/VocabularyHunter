@@ -37,4 +37,3 @@ if __name__ == '__main__':
     article = util.read_to_string(sys.argv[1])
     words = util.read_to_string(sys.argv[2])
     unknow = find_unknow_word(tokens(article),tokens(words))
-    print(unknow)
