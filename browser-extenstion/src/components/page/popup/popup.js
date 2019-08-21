@@ -1,8 +1,8 @@
 import "./popup.css";
 import React, { Component } from "react";
-import DictContainer from "./components/dictcontainer";
-import Api from "./api";
-import bt from "./broswer/tools";
+import DictContainer from "../../organisms/dictcontainer";
+import Api from "../../../api";
+import bt from "../../../browser/tools";
 const ID = "mock-id";
 
 class PopUp extends Component {
