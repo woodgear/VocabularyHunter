@@ -1,8 +1,4 @@
 __pycache__
-db_storage
-ECDICT/*.csv
-ECDICT/*.txt
-ECDICT/*.sqlite
+db_storage/*
 venv
 dict
-*.pyc
