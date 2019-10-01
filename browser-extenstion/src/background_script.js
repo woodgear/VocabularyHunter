@@ -1,3 +1,5 @@
+console.log("background run");
+
 chrome.runtime.onInstalled.addListener(function() {
     console.log("chrome.runtime.onInstalled");
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {

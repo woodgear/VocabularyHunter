@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:5000"
+const SERVER_URL = "http://localhost:10000"
 class Api {
     async hunter(id, article) {
         return fetch(`${SERVER_URL}/hunter`, {
