@@ -5,7 +5,7 @@ from stardict import  *
 import util
 import os
 
-STAR_DICT_SQLITE = os.getenv("STAR_DICT_SQLITE")  or "./dict/ECDICT/stardict.sqlite"
+STAR_DICT_SQLITE = os.getenv("STAR_DICT_SQLITE")  or "./dict/ecdict/stardict.sqlite"
 
 class WordPos:
     def __init__(self,pos_str):
