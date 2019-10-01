@@ -1,9 +1,12 @@
 import sys
 import os
-sys.path.insert(0, os.path.abspath(f'{os.path.dirname(__file__)}/../ECDICT'))
+sys.path.insert(0, os.path.abspath(f'{os.path.dirname(__file__)}/../lib/ECDICT'))
 from stardict import  *
 import util
-STAR_DICT_SQLITE = "./ECDICT/stardict.sqlite"
+import os
+
+STAR_DICT_SQLITE = os.getenv("STAR_DICT_SQLITE")  or "./dict/ECDICT/stardict.sqlite"
+
 class WordPos:
     def __init__(self,pos_str):
         pos_dict = {p.split(":")[0]:p.split(":")[1] for p in pos_str.split('/')}

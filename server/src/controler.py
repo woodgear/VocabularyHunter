@@ -1,7 +1,6 @@
 from find_unknow_words import *
 from db_model import *
 from dicthelper import DictHelper
-# 如何去除link
 
 
 class Controller:
