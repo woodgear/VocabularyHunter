@@ -1,5 +1,9 @@
-.App {
+.app {
   display: flex;
-  width: 500px;
-  height: 500px;
+  flex-direction: column 
+}
+
+.name {
+  width: 90px;
+  display: inline-block;
 }

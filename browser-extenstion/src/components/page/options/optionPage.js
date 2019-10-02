@@ -1,25 +1,54 @@
 import "./optionPage.css";
 import React, { Component } from "react";
+import * as bt from "../../../browser/tools";
+async function setUserId(userId) {
+console.log("setUserId",userId);
+return bt.setStorage("userId",userId)
+}
+
+async function setVhServer(vhServer) {
+  console.log("setVhServer",vhServer);
+  return bt.setStorage("userId",VhServer)
+}
 
 class OptionPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { userId: null, vh_server: null };
+    console.log(props)
+    this.state = { userId: this.props.userId, vhServer: this.props.vhServer, debugMode: false };
   }
+
   render() {
     return (
-      <div className="App">
-        <div className="user-id-container">
-          <span>user id:</span>
-          <input type="text" defaultValue={this.state.vh_server || "xxxx"} />
-          {this.state.userId}
+      <div className="app">
+        <div className="input-container user-id">
+          <span className="name">user id:</span>
+          <input className="input" type="text" disabled={!this.state.debugMode} onInput={(event) => {
+            this.setState({ userId: event.target.value })
+          }} defaultValue={this.state.userId} />
+          <button className="action" hidden={!this.state.debugMode} onClick={() => {
+            setUserId(this.state.userId)
+          }}>确定</button>
+
+        </div>
+        <div className="input-container vh-server">
+          <span className="name">vh server:</span>
+          <input className="input" type="text" disabled={!this.state.debugMode} onInput={(event) => {
+            this.state.vhServer = event.target.value;
+          }} defaultValue={this.state.vhServer} />
+          <button className="action" hidden={!this.state.debugMode} onClick={() => {
+            setVhServer(this.state.vhServer)
+          }}>确定</button>
         </div>
         <div>
-          <span>vh server:</span>
-          <input type="text" defaultValue={this.state.vh_server || "xxxx"} />
-          <button>确定</button>
+          <input type="checkbox" id="debug-mode-checkbox" defaultChecked={!this.state.debugMode} name="debug-mode" onClick={() => {
+            console.log("oncheck")
+            this.setState({ debugMode: !this.state.debugMode })
+          }} />
+          <label >debug-mode</label>
         </div>
+
       </div>)
   }
 }

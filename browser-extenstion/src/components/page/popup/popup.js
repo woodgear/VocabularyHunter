@@ -2,21 +2,20 @@ import "./popup.css";
 import React, { Component } from "react";
 import DictContainer from "../../organisms/dictcontainer";
 import Api from "../../../api";
-import bt from "../../../browser/tools";
-const ID = "mock-id";
+import * as bt from "../../../browser/tools";
 
 class PopUp extends Component {
   constructor(props) {
     super(props);
-    this.api = new Api();
+    this.api = new Api(this.props.userId, this.props.vhServer);
     this.state = { article: "", explains: [] };
     this.actions = {
       markKnow: async word => {
-        await this.api.markAsKnow(ID, [word]);
+        await this.api.markAsKnow([word]);
         console.log("markKnow", word);
       },
       markUnKnow: async word => {
-        await this.api.markAsUnKnow(ID, [word]);
+        await this.api.markAsUnKnow([word]);
       }
     };
   }
@@ -24,8 +23,8 @@ class PopUp extends Component {
     bt.sendToContentScript({ action: "parser" }).then(async ({ article }) => {
       if (!!article) {
         console.log(article);
-        const words = await this.api.hunter(ID, article);
-        const explains = await this.api.getExplain(ID, words);
+        const words = await this.api.hunter(article);
+        const explains = await this.api.getExplain(words);
         console.log(explains)
         this.setState({ explains });
       } else {

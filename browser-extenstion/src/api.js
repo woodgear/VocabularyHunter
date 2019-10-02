@@ -1,10 +1,14 @@
-const SERVER_URL = "http://localhost:10000"
 class Api {
-    async hunter(id, article) {
-        return fetch(`${SERVER_URL}/hunter`, {
+    constructor(id, vhServer) {
+        this.id = id;
+        this.vhServer = vhServer;
+    }
+
+    async hunter(article) {
+        return fetch(`${this.vhServer}/hunter`, {
             method: "POST",
             headers: {
-                id,
+                id:this.id,
                 'content-type': 'application/json'
             },
             body: JSON.stringify({ article })
@@ -13,12 +17,12 @@ class Api {
         }).then(res => res.words)
     }
 
-    async getExplain(id, words) {
+    async getExplain(words) {
         console.log("get explain", words);
-        return fetch(`${SERVER_URL}/explain`, {
+        return fetch(`${this.vhServer}/explain`, {
             method: "POST",
             headers: {
-                id,
+                id:this.id,
                 'content-type': 'application/json'
             },
             body: JSON.stringify({ words })
@@ -27,22 +31,22 @@ class Api {
         })
     }
 
-    async markAsKnow(id, words) {
-        return fetch(`${SERVER_URL}/mark/know`, {
+    async markAsKnow(words) {
+        return fetch(`${this.vhServer}/mark/know`, {
             method: "POST",
             headers: {
-                id,
+                id:this.id,
                 'content-type': 'application/json'
             },
             body: JSON.stringify({ words })
         })
     }
 
-    async markAsUnKnow(id, words) {
-        return fetch(`${SERVER_URL}/mark/unknow`, {
+    async markAsUnKnow(words) {
+        return fetch(`${this.vhServer}/mark/unknow`, {
             method: "POST",
             headers: {
-                id,
+                id:this.id,
                 'content-type': 'application/json'
             },
             body: JSON.stringify({ words })

@@ -21,14 +21,19 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
+    "crx": "^5.0.1",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "uuid": "^3.3.3",
+    "webpack-dev-server": "^3.8.1"
   },
   "name": "test-webpack",
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build-product": "rm -rf ./dist/* && webpack --env=production",
+    "build-dev": "rm -rf ./dist/* &&  webpack --env=development",
+    "release-crx": "npm run build-product && node build/crx.js",
     "start": "webpack-dev-server"
   },
   "author": "",

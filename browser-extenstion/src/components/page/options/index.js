@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import OptionPage from './optionPage';
+import init from "../../../init";
 
-ReactDOM.render(<OptionPage  />, document.getElementById('root'));
+
+init().then(({ userId, vhServer }) => {
+        ReactDOM.render(<OptionPage userId  ={userId} vhServer={vhServer}/>, document.getElementById('root'));
+})

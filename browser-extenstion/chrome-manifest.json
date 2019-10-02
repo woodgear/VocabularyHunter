@@ -8,7 +8,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["<all_urls>"],
       "css": [],
       "js": ["content_script.js"]
     }
@@ -19,7 +19,7 @@
     "page": "options.html",
     "open_in_tab": true
   },
-  "permissions": ["activeTab", "declarativeContent", "storage","*://*/*"],
+  "permissions": ["activeTab", "declarativeContent", "storage","<all_urls>"],
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -35,6 +35,8 @@
     "48": "icons/get_started48.png",
     "128": "icons/get_started128.png"
   },
-
+  "web_accessible_resources": [
+    "extenstion_config/*.json"
+],
   "manifest_version": 2
 }
