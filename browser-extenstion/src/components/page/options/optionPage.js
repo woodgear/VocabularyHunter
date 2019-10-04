@@ -1,6 +1,6 @@
 import "./optionPage.css";
 import React, { Component } from "react";
-import * as bt from "../../../browser/tools";
+import * as bt from "../../../browser/browser_tool";
 async function setUserId(userId) {
 console.log("setUserId",userId);
 return bt.setStorage("userId",userId)

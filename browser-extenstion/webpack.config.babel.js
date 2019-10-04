@@ -2,7 +2,9 @@ import path from "path";
 import HtmlWebPackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-function  defaultConfig() {
+import  * as webpack from "webpack";
+
+function defaultConfig() {
   return {
     entry: {
       popup: "./src/components/page/popup/index.js",//工具栏弹窗
@@ -50,6 +52,17 @@ function  defaultConfig() {
     module: {
       rules: [
         {
+          test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: '[path][name]-[hash:8].[ext]'
+                  },
+              },
+          ]
+      },
+        {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: {
@@ -83,10 +96,28 @@ function  defaultConfig() {
 }
 
 export default (env) => {
-  const devConfig = defaultConfig()// 好惨啊
+  console.log("start webpack", env)
+
+  const devConfig = defaultConfig()
   devConfig.plugins.push(new CopyWebpackPlugin([
     { from: 'extenstion_config/config-dev.json', to: 'extenstion_config/config.json' },
   ]));
+
+  if (env === "webpakc-dev-server") {
+    const config = defaultConfig()
+    config.plugins.push(new CopyWebpackPlugin([
+      { from: 'extenstion_config/config-dev.json', to: 'extenstion_config/config.json' },
+    ]));
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /browser_tool/,
+        (resource)=>{
+          console.log(resource.request)
+          resource.request = resource.request.replace("browser_tool","mock_browser_tool");
+        }
+      ))
+      return config;
+  }
 
   if (env === "production") {
     console.log("production build")

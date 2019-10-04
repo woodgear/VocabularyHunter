@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./index.css";
+import Sound from "../sound";
 
-// const defaultProps =
 export default class DictContainer extends Component {
   static propTypes = {
     explains: PropTypes.arrayOf(PropTypes.object),
@@ -58,8 +58,8 @@ export default class DictContainer extends Component {
   async markUnKnow() {
     const word = this.getCurrentWordName();
     if (word) {
-     await this.props.actions.markUnKnow(word);
-     this.onClickNext()
+      await this.props.actions.markUnKnow(word);
+      this.onClickNext()
     }
   }
 
@@ -81,6 +81,12 @@ export default class DictContainer extends Component {
     }
   }
 
+  renderSound(word) {
+    return (<div className="sound">
+      <Sound word={word}/>
+    </div>)
+  }
+
   renderWordHead(name, phonetic, knowType) {
     console.log(name, phonetic, knowType);
     const knowTypeEle = (knowType => {
@@ -98,9 +104,10 @@ export default class DictContainer extends Component {
         <div className="word-phonetic">
           <span>[{phonetic}]</span>
         </div>
+        {this.renderSound(name)}
         <div className="knowtype"><span>{knowTypeEle}</span></div>
         <div className="word-index">
-        <span>{this.state.currentIndex+1}/{this.props.explains.length}</span>
+          <span>{this.state.currentIndex + 1}/{this.props.explains.length}</span>
         </div>
       </div>
     );
@@ -139,7 +146,7 @@ export default class DictContainer extends Component {
     const currentWord = this.props.explains[this.state.currentIndex];
     return (
 
-      <div className={this.props.explains.length===0?"dict-container empty":"dict-container has-data"}>
+      <div className={this.props.explains.length === 0 ? "dict-container empty" : "dict-container has-data"}>
         <div className="word-explain-container">
           {this.renderWordHead(
             currentWord.explain.name,

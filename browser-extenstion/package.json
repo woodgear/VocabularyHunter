@@ -11,9 +11,11 @@
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
+    "module-replace-webpack-plugin": "0.0.12",
     "prop-types": "^15.7.2",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.6",
@@ -24,17 +26,18 @@
     "crx": "^5.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-sound": "^1.2.0",
     "uuid": "^3.3.3",
     "webpack-dev-server": "^3.8.1"
   },
-  "name": "test-webpack",
+  "name": "vh",
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
     "build-product": "rm -rf ./dist/* && webpack --env=production",
     "build-dev": "rm -rf ./dist/* &&  webpack --env=development",
     "release-crx": "npm run build-product && node build/crx.js",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --env webpakc-dev-server"
   },
   "author": "",
   "license": "ISC",

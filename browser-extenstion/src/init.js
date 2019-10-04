@@ -1,4 +1,4 @@
-import * as bt from "./browser/tools";
+import * as bt from "./browser/browser_tool";
 import * as util from "./util";
 
 export default async function initExtenstion() {

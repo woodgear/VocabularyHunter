@@ -2,7 +2,7 @@ import "./popup.css";
 import React, { Component } from "react";
 import DictContainer from "../../organisms/dictcontainer";
 import Api from "../../../api";
-import * as bt from "../../../browser/tools";
+import * as bt from "../../../browser/browser_tool";
 
 class PopUp extends Component {
   constructor(props) {

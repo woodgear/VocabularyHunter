@@ -72,7 +72,6 @@ class Api {
             },
             body: JSON.stringify({ words })
         })
-
     }
 }
 
