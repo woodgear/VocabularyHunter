@@ -1,4 +1,4 @@
 {
     "userId":"mock-id",
-    "vhServer":"127.0.0.1:10000"
+    "vhServer":"http://127.0.0.1:10000"
 }

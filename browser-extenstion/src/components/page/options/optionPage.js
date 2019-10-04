@@ -8,14 +8,13 @@ return bt.setStorage("userId",userId)
 
 async function setVhServer(vhServer) {
   console.log("setVhServer",vhServer);
-  return bt.setStorage("userId",VhServer)
+  return bt.setStorage("vhServer",vhServer)
 }
 
 class OptionPage extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = { userId: this.props.userId, vhServer: this.props.vhServer, debugMode: false };
   }
 
