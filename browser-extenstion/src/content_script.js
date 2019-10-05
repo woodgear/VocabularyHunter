@@ -1,5 +1,5 @@
 /* global chrome */
-
+import { parserArticle } from './content_parser'
 console.log('i am a content script')
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -18,5 +18,5 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
 function onParserArticle () {
   console.log('onParserArticle')
-  return { article: document.body.innerText }
+  return { article: parserArticle(document.body) }
 }

@@ -6,6 +6,7 @@ import * as webpack from 'webpack'
 
 function defaultConfig () {
   return {
+    target: 'web',
     entry: {
       popup: './src/components/page/popup/index.js', // 工具栏弹窗
       background_script: './src/background_script.js', // 后台脚本
@@ -98,10 +99,36 @@ function defaultConfig () {
 export default (env) => {
   console.log('start webpack', env)
 
-  const devConfig = defaultConfig()
-  devConfig.plugins.push(new CopyWebpackPlugin([
-    { from: 'extenstion_config/config-dev.json', to: 'extenstion_config/config.json' }
-  ]))
+  if (env === 'build-dom-util') {
+    const config = {
+      entry: {
+        dom_util: './src/content_parser.js' // 工具栏弹窗
+      },
+      output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
+        library: 'domUtil',
+        libraryTarget: 'window'
+      },
+      plugins: [
+      ],
+      module: {
+        rules: [
+          {
+            test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader'
+            }
+          }]
+      },
+      externals: {
+        puppeteer: 'require("puppeteer")'
+      }
+    }
+
+    return config
+  }
 
   if (env === 'webpakc-dev-server') {
     const config = defaultConfig()
@@ -126,10 +153,27 @@ export default (env) => {
       { from: 'extenstion_config/config-product.json', to: 'extenstion_config/config.json' }
     ]))
     return config
-  } else if (env === 'development') {
+  }
+
+  if (env === 'development') {
     console.log('development build')
+
+    const devConfig = defaultConfig()
+    devConfig.plugins.push(new CopyWebpackPlugin([
+      { from: 'extenstion_config/config-dev.json', to: 'extenstion_config/config.json' }
+    ]))
     return devConfig
   }
-  console.log('development build')
-  return devConfig
+
+  if (env === 'mochapack') {
+    console.log('mochapack build')
+
+    const devConfig = defaultConfig()
+    devConfig.target = 'node'
+    devConfig.externals = {
+      child_process: 'require("child_process")',
+      puppeteer: 'require("puppeteer")'
+    }
+    return devConfig
+  }
 }

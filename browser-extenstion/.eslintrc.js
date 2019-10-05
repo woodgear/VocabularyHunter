@@ -1,12 +1,19 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
+    mocha: true
+
   },
   extends: [
     'standard',
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:mocha/recommended"
 
+  ],
+  plugins: [
+    "mocha",
+    "react"
   ],
   globals: {
     Atomics: 'readonly',
@@ -21,10 +28,11 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    "promise/param-names":"off"
+    "promise/param-names": "off",
+    "mocha/no-mocha-arrows": "off",
+    "mocha/no-top-level-hooks": "off"
   },
-
-  "settings": {
+  settings: {
     "react": {
       "createClass": "createReactClass", // Regex for Component Factory to use,
       // default to "createReactClass"
