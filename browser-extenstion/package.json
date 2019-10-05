@@ -8,15 +8,25 @@
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^4.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.0.0-beta.2",
     "mini-css-extract-plugin": "^0.8.0",
     "module-replace-webpack-plugin": "0.0.12",
     "prop-types": "^15.7.2",
+    "puppeteer-core": "^1.20.0",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.8.0"
@@ -27,8 +37,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-sound": "^1.2.0",
-    "uuid": "^3.3.3",
-    "webpack-dev-server": "^3.8.1"
+    "uuid": "^3.3.3"
   },
   "name": "vh",
   "version": "1.0.0",
@@ -37,9 +46,15 @@
     "build-product": "rm -rf ./dist/* && webpack --env=production",
     "build-dev": "rm -rf ./dist/* &&  webpack --env=development",
     "release-crx": "npm run build-product && node build/crx.js",
-    "start": "webpack-dev-server --env webpakc-dev-server"
+    "start": "webpack-dev-server --env webpakc-dev-server",
+    "lint": "eslint ./"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
 }
