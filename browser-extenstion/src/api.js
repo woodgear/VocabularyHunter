@@ -36,8 +36,32 @@ class Api {
     }).then(res => res.words)
   }
 
+  async export () {
+    return fetch(`${this.vhServer}/api/vh/export/all`, {
+      method: 'POST',
+      headers: {
+        id: this.id,
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      }
+    }).then(res => {
+      return res.json()
+    })
+  }
+
+  async import (words) {
+    return fetch(`${this.vhServer}/api/vh/import/all`, {
+      method: 'POST',
+      headers: {
+        id: this.id,
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      },
+      body: await gzip(JSON.stringify({ words }))
+    })
+  }
+
   async getExplain (words) {
-    console.log('get explain', words)
     return fetch(`${this.vhServer}/api/vh/explain`, {
       method: 'POST',
       headers: {

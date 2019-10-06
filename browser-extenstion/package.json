@@ -40,6 +40,7 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "crx": "^5.0.1",
+    "file-saver": "^2.0.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-sound": "^1.2.0",
@@ -55,7 +56,6 @@
     "start": "webpack-dev-server --env webpakc-dev-server",
     "lint": "eslint ./",
     "lint-fix": "eslint  --fix ./",
-
     "test": "mochapack --mode   development   --webpack-env mochapack  test/*.test.js"
   },
   "author": "",

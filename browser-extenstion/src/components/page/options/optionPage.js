@@ -1,8 +1,10 @@
 import './optionPage.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
+import Api from '../../../api'
 import * as bt from '../../../browser/browser_tool'
+
+import { saveAs } from 'file-saver'
 
 async function setUserId (userId) {
   console.log('setUserId', userId)
@@ -23,6 +25,29 @@ class OptionPage extends Component {
   constructor (props) {
     super(props)
     this.state = { userId: this.props.userId, vhServer: this.props.vhServer, debugMode: false }
+  }
+
+  renderExportAndImport () {
+    return (<div>
+      <button onClick={async () => {
+        const api = new Api(this.state.userId, this.state.vhServer)
+        const data = await api.export()
+        var blob = new Blob([JSON.stringify(data)], { type: 'application/json;charset=utf-8' })
+        saveAs(blob, 'export.json')
+      }}>导出</button>
+
+      <input type="file" id="input" onChange={async (event) => {
+        const jsonFile = event.target.files[0]
+        console.log(jsonFile)
+        const context = JSON.parse(await jsonFile.text())
+        const words = context.words
+        const api = new Api(this.state.userId, this.state.vhServer)
+        console.log('start upload')
+        await api.import(words)
+        console.log('upload over')
+      }} />
+
+    </div>)
   }
 
   render () {
@@ -53,6 +78,7 @@ class OptionPage extends Component {
             this.setState({ debugMode: !this.state.debugMode })
           }} />
           <label >debug-mode</label>
+          {this.renderExportAndImport()}
         </div>
 
       </div>)
