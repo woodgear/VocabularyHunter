@@ -6,7 +6,7 @@ RUN rm /etc/apt/sources.list && echo "deb http://mirrors.aliyun.com/debian buste
     && echo "deb http://mirrors.aliyun.com/debian buster-updates main contrib non-free" >> /etc/apt/sources.list \
     && echo "deb http://mirrors.aliyun.com/debian-security/ buster/updates main non-free contrib" >> /etc/apt/sources.list 
 
-RUN apt update && apt install gcc -y
+RUN apt update && apt install gcc  vim  sqlite3 -y
 RUN mkdir ~/.pip &&  echo "[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple" > ~/.pip/pip.conf
 
 RUN cat ~/.pip/pip.conf

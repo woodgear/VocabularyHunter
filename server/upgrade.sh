@@ -4,4 +4,4 @@ VERSION=$1
 docker pull wucong/vh:$VERSION
 docker stop vh
 docker rm vh
-docker run -it --name vh -v $CFD/db_orage:/vh/db_storage -v $CFD/dict:/vh/dict   -p 80:8080 wucong/vh:$VERSION
+docker run -d --name vh -v $CFD/db_storage:/vh/db_storage -v $CFD/dict:/vh/dict   -p 80:8080 wucong/vh:$VERSION
