@@ -26,7 +26,7 @@ class Controller:
 
     def find_unknow_words_by_article(self, id, article):
         know_words = self.model.get_all_know_word_by_id(id)
-        unknow = find_unknow_word(tokens(article), know_words)
+        unknow = find_unknow_word(tokenize(article), know_words)
         return unknow
         pass
 
