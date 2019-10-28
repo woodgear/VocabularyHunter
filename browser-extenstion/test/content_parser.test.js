@@ -2,9 +2,11 @@ import { assert } from 'chai'
 import puppeteer from 'puppeteer'
 import { exec } from 'child_process'
 import path from 'path'
+import { writeFileSync } from 'fs'
+import *  as dom from '../src/content_parser'
 const executablePath = './chrome-linux/chrome'
 
-async function buildDomUtil () {
+async function buildDomUtil() {
   return new Promise((res, rej) => {
     exec('npx webpack --env build-dom-util --mode development', (err, stdout) => {
       if (err) {
@@ -22,7 +24,7 @@ describe('ParserArticle shoud correct', () => {
   before(async () => {
     browser = await puppeteer.launch(
       {
-        executablePath
+        executablePath,
         // headless: false,
         // slowMo: 3000,
         // devtools: true
@@ -34,32 +36,56 @@ describe('ParserArticle shoud correct', () => {
     await browser.close()
   })
 
-  async function testParserArticle (filePath, expectTxt) {
+  async function testParserArticle(filePath, expectTxt) {
     const page = await browser.newPage()
     await page.goto(filePath)
     const domUtilPath = await buildDomUtil()
     await page.addScriptTag({ path: domUtilPath })
     const result = await page.evaluate(async () => {
       /* eslint no-undef: "off" */
-      return Promise.resolve(domUtil.parserArticle(document.body))
+      return Promise.resolve(domUtil.parserArticle(document))
     })
     console.log('result', result)
     assert.equal(result, expectTxt)
   }
 
-  it('for debug parserArticle', async () => {
+  it.skip('for debug parserArticle', async () => {
     const page = await browser.newPage()
-    await page.goto('file:///home/oaa/lab/VocabularyHunter/browser-extenstion/mock-data/test.html')
+    await page.goto("file:///home/oaa/Desktop/a.html")
     const domUtilPath = await buildDomUtil()
     await page.addScriptTag({ path: domUtilPath })
     const result = await page.evaluate(async () => {
-      return Promise.resolve(domUtil.parserArticle(document.body))
+      return Promise.resolve(domUtil.parserArticle(document))
     })
-    console.log('result', result)
-  })
+    writeFileSync("content.data", result.content);
+    assert.equal(result.title, "I made a NES emulator in Rust using generators");
+  }).timeout(100 * 1000)
 
-  it('should get corrent data', async () => {
-    const filePath = `file://${path.join(process.cwd(), 'mock-data/test.html')}`
-    await testParserArticle(filePath, 'ssssssss\n\nppppppp\n\nVisit W3Schools.com!')
+  // it('should get corrent data', async () => {
+  //   const filePath = `file://${path.join(process.cwd(), 'mock-data/test.html')}`
+  //   await testParserArticle(filePath, 'ssssssss\n\nppppppp\n\nVisit W3Schools.com!')
+  // })
+
+
+  it('test parser', async () => {
+    let data = { a: "a" }
+    assert.equal(dom._access(data, [{ "type": "object", "field": "a" }]), data.a)
+    data = { a: { "a": "a" } }
+    assert.equal(dom._access(data, [{ "type": "object", "field": "a" }]), data.a)
+    data = { a: ["a"] }
+    assert.equal(dom._access(data, [{ "type": "object", "field": "a" }, { "type": "array", "index": 0 }]), data.a[0])
+
+    assert.deepEqual(dom.str2cmd(".a"), [{ "type": "object", "field": "a" }])
+    assert.deepEqual(dom.str2cmd("[1]"), [{ "type": "array", "index": "1" }])
+    assert.deepEqual(dom.str2cmd(".a[1]"), [{ "type": "object", "field": "a" }, { "type": "array", "index": "1" }])
+    assert.deepEqual(dom.str2cmd("[1].a"), [{ "type": "array", "index": "1" }, { "type": "object", "field": "a" }])
+    assert.deepEqual(dom.str2cmd("[\"ccccc\"].a"), [{ "type": "array", "index": "ccccc" }, { "type": "object", "field": "a" }])
+
+    data = { a: "a" }
+    assert.equal(dom.access(data, ".a"), data.a)
+    data = { a: { "a": "a" } }
+    assert.equal(dom.access(data, ".a.a"), data.a.a)
+    data = { a: ["a"] }
+    assert.equal(dom.access(data, ".a[0]"), data.a[0])
   })
 })
