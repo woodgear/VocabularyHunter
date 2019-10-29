@@ -34,6 +34,35 @@ class DbModel:
         self.db.meta.insert(key='db_version', value=DB_VERSION)
         self.db.commit()
 
+    def init_corpus_table(self,db):
+        """
+初始化与语料相关的表 也许以后应当是横切的数据库
+corpus_meta {
+    id,                 # 自动生成主键之类的
+    md5,            # corpus 应当是纯文字的感觉
+    type,            # corpus类型 设计上有 article subtitle book 之类的
+    struct,         # 存储来此corpus的结构 之后查询的时候 通过这个结构和倒排索引 拿到初始范围  {start:xx,end:xxx,type:"root",child:[{start:xx,end:xxx etc}]
+    time, 
+    source,        # 例如url之类的
+}
+corpus {
+    id,
+    content,
+}
+
+user_corpus {
+    user_id,
+    corpus_id
+}
+
+word_invert_index {
+    word,
+    lemma,
+    corpus_id
+    position, # left-right
+}
+        """
+        # 
     def get_all_unknow_word_by_id(self, id):
         """
         Args:
@@ -84,3 +113,4 @@ class DbModel:
                 time=pytime.asctime(pytime.gmtime()))
         self.db.commit()
         pass
+    

@@ -7,6 +7,7 @@ data = """ So, I took this challenge myself and came out the other end with a pr
 class Test(unittest.TestCase):
     def test_paragraph(self):
         res = cacl_paragraph(data)
+        print(res)
         self.assertEqual(res, [{'start': 0, 'end': 118}, {
                          'start': 119, 'end': 255}, {'start': 256, 'end': 377}])
         pass
@@ -16,7 +17,8 @@ class Test(unittest.TestCase):
         self.assertEqual(clear_article(input), "a\nb\nv")
 
     def test_cacl_article(self):
-        res = cacl_article(data)
+        article = clear_article(data)
+        res = cacl_article(article)
         expect_res = [{'start': 0, 'end': 376, 'kind': 'paragraph', 'child': [
             {'start': 0, 'end': 117}, {'start': 118, 'end': 254}, {'start': 255, 'end': 376}]}]
         # print(res)

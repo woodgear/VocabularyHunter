@@ -54,14 +54,16 @@ def sentence_span_tokenize(article):
     pass
 
 
-def _word_span_tokenize(article):
+def raw_word_span_tokenize(article):
     sentences = sentence_span_tokenize(article)
     for sentence_span in sentences:
-        for word_span in span_tokenize(article[sentence_span[0]:sentence_span[1]]):
+        sentence = article[sentence_span[0]:sentence_span[1]]
+        for word_span in span_tokenize(sentence):
             word_span_start = word_span[0]+sentence_span[0]
             word_span_end = word_span[1]+sentence_span[0]
+            word = article[word_span_start:word_span_end]
 
-            yield {"span": (word_span_start, word_span_end), "word": article[word_span_start:word_span_end]}
+            yield {"span": (word_span_start, word_span_end), "word":word }
     return
     pass
 
@@ -70,7 +72,7 @@ def word_span_tokenize(article):
     def lower_token(token):
         token["word"] = token["word"].lower()
         return token
-    tokens = _word_span_tokenize(article)
+    tokens = raw_word_span_tokenize(article)
     return (seq(tokens)
         .map(lower_token)
         .filter(lambda token: not token["word"] in ",./;'[]<>?:\"{}!@#$%^&*()_+-=")

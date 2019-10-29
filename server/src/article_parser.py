@@ -6,14 +6,32 @@ import json
 from dicthelper import DictHelper
 from find_unknow_words import *
 
-# def save(user_id, article):
-#     words = words(article)
-#     words = seq(words).map(
-#         lambda w: {"word": w["word"], range: w["range"], "word_root": find_word_root(w["word"])})
-#     id = build_aritcle(article)
-#     build_word_inver_index(id, words)
-#     connect_user_and_article(user_id, id)
-#     pass
+def save(user_id, article):
+    article = clear_article(article)
+    words = words(article)
+    # id = build_aritcle(article)
+    # build_word_inver_index(id, words)
+    # connect_user_and_article(user_id, id)
+    pass
+
+
+def words(aritcle):
+    res = seq(word_span_tokenize(aritcle)).map(lambda w: (DictHelper().describe(w["word"]), w["span"])).filter(lambda w: w[0])
+
+    for token in res:
+        w = token[0]
+        span = token[1]
+        if w.exchange and w.exchange["0"]:
+            assert aritcle[span[0]:span[1]].lower() == w.name
+            yield {"span":span,"word":w.name,"lemma":w.exchange["0"]}
+        else:
+            assert aritcle[span[0]:span[1]] .lower()==w.name
+            yield {"span":span,"word":w.name,"lemma":w.name}
+
+# res = list(words(cacl_article(read_to_string("./mock_data/content.data"))["raw"]))
+# for w in res:
+#     if w["word"] != w["lemma"]:
+#         print(w)
 
 
 # def query_sentence(user_id, aritcle_id, range):
@@ -39,9 +57,9 @@ from find_unknow_words import *
 #         return {"aritcle_id": article["id"], "sentence": sentence, "expand_left": expand_left, "expand_right": expand_right, "title": article["title"], "url": article["url"]}
 #         pass
 
-#     word_root = find_word_root(word)
-#     articles = find_article_by_word_root(user_id, word_root)
-#     word_invert_index = find_word_invert_index(user_id, word_root)
+#     lemma = find_lemma(word)
+#     articles = find_article_by_lemma(user_id, lemma)
+#     word_invert_index = find_word_invert_index(user_id, lemma)
 #     res = list(seq(articles).map(
 #         lambda a: find_sentence(a, word_invert_index)))
 #     return res
@@ -56,8 +74,6 @@ def clear_article(data):
 
 
 def cacl_article(article):
-    article = clear_article(article)
-
     def find_line_index(article):
         start = 0
         end = len(article)
@@ -70,7 +86,7 @@ def cacl_article(article):
             start = lineIndex+1
     pass
     res = []
-    for start, end in list(find_line_index(article))[0:10]:
+    for start, end in find_line_index(article):
         sentence_range = cacl_paragraph(article[start:end], start)
         res.append({"start": start, "end": end,
                     "kind": "paragraph", "child": sentence_range})
@@ -86,22 +102,3 @@ def cacl_paragraph(paragraph, offset=0):
     return res
     pass
 
-
-
-def words(aritcle):
-    res = seq(word_span_tokenize(aritcle)).map(lambda w: (DictHelper().describe(w["word"]), w["span"])).filter(lambda w: w[0])
-
-    for token in res:
-        w = token[0]
-        span = token[1]
-        if w.exchange and w.exchange["0"]:
-            assert aritcle[span[0]:span[1]].lower() == w.name
-            yield {"span":span,"word":w.name,"word_root":w.exchange["0"]}
-        else:
-            assert aritcle[span[0]:span[1]] .lower()==w.name
-            yield {"span":span,"word":w.name,"word_root":w.name}
-
-# TODO word == word_root ? why
-res = list(words(cacl_article(read_to_string("./mock_data/content.data"))["raw"]))
-for w in res:
-    print(w)
