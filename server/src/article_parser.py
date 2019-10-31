@@ -4,15 +4,29 @@ from nltk.tokenize.punkt import PunktSentenceTokenizer
 from functional import seq
 import json
 from dicthelper import DictHelper
+from db_model import * 
+
 from find_unknow_words import *
 
-def save(user_id, article):
+def save(user_id, article_data):
+    article = article_data["article"]
     article = clear_article(article)
+    url = article_data["url"]
+    name = article_data["title"]
+    md5 = md5(article)
+    
     words = words(article)
-    # id = build_aritcle(article)
-    # build_word_inver_index(id, words)
+    # id = build_aritcle({"article":article,"name":name,"source":url,"type":"website-article","md5":md5})
+    # # build_word_inver_index(id, words)
     # connect_user_and_article(user_id, id)
     pass
+
+# def build_aritcle(article):
+#     struct = cacl_article(article["article"])
+#     aritcle["struct"] = struct
+#     model = DbModel()
+#     model.save_article(article)
+
 
 
 def words(aritcle):
@@ -90,7 +104,7 @@ def cacl_article(article):
         sentence_range = cacl_paragraph(article[start:end], start)
         res.append({"start": start, "end": end,
                     "kind": "paragraph", "child": sentence_range})
-    return {"start": 0, "end": len(article), "child": res, "kind": "article", "raw": article}
+    return {"start": 0, "end": len(article), "child": res, "kind": "article"}
     pass
 
 
