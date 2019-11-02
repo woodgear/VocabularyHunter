@@ -7,6 +7,8 @@ import datetime
 
 import gc
 FOLDER_PATH = "test-db"
+
+
 class TestDbModel(unittest.TestCase):
     def setUp(self):
         print(self.id(),"setUp")
@@ -71,16 +73,41 @@ class TestDbModel(unittest.TestCase):
         raw_article = "123456789"
         aritcle =  {"aritcle":raw_article,"name":"name","source":"https://xxx.com","type":"website-article",
         "struct":"xxxxx",
-        "md5":"xxxxxx","time":now}
+        "md5":"md5","time":now}
         corpus_id = self.model.save_aritcle(aritcle)
         meta  = self.model.find_aritcle_meta(corpus_id)
-        self.assertEqual(meta,{'id': 1, 'md5': 'xxxxxx', 'type': 'website-article', 'struct': 'xxxxx','time': now, 'source': 'https://xxx.com', 'name': 'name'})
-        data = self.model.find_aritcle(corpus_id,1,2)
+        self.assertEqual(meta,{'id': 1, 'md5': 'md5', 'type': 'website-article', 'struct': 'xxxxx','time': now, 'source': 'https://xxx.com', 'name': 'name'})
+        data = self.model.find_aritcle(corpus_id,(1,2))
         self.assertEqual(data,raw_article[1:2])
-        data = self.model.find_aritcle(corpus_id,0,7)
+        data = self.model.find_aritcle(corpus_id,(0,7))
         self.assertEqual(data,raw_article[0:7])
+        self.assertEqual(True,self.model.has_article({"md5":"md5"}))
+        self.assertEqual(False,self.model.has_article({"md5":"mddxxx5"}))
 
         print(data)
+        pass
+    def test_save_word_invert_index(self):
+        mock_word_invert = [{'span': (0, 4), 'word': 'apple', 'lemma': 'apple'}]
+
+        raw_article = "apple is tree."
+        aritcle =  {"aritcle":raw_article,"name":"name","source":"https://xxx.com","type":"website-article",
+        "struct":"xxxxx",
+        "md5":"md5","time":datetime.datetime.now()}
+        self.model = DbModel(folder_path=FOLDER_PATH)
+        corpus_id_1 = self.model.save_aritcle(aritcle)
+      
+        self.model.connect_user_and_corpus("user_1",corpus_id_1)
+        self.model.save_word_invert_index(corpus_id_1,mock_word_invert)
+        res = list(self.model.find_word_invert_index("user_1","apple"))
+        print("res ",res)
+        self.assertEqual(res,[{'word': 'apple', 'lemma': 'apple', 'corpus_id': 1, 'span': [0, 4]}])
+
+        res = list(self.model.find_word_invert_index("user_2","apple"))
+        self.assertEqual(res,[])
+        self.model.connect_user_and_corpus("user_2",corpus_id_1)
+        res = list(self.model.find_word_invert_index("user_2","apple"))
+        self.assertEqual(res,[{'word': 'apple', 'lemma': 'apple', 'corpus_id': 1, 'span': [0, 4]}])
+        pass
 
 
 
