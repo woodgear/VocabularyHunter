@@ -1,7 +1,7 @@
 import unittest
 from find_unknow_words import *
 
-aritcle1 = """Those who do not understand Unix are condemned to reinvent it, poorly.
+article1 = """Those who do not understand Unix are condemned to reinvent it, poorly.
 – Henry Spencer, Usenet signature, November 1987
 """
 class TestWord(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestWord(unittest.TestCase):
         """
         Test word_tokenize which will spilt word from article
         """
-        words1 = tokenize(aritcle1)
+        words1 = tokenize(article1)
         print(words1)
         self.assertEqual(words1, ['those', 'understand', 'unix', 'condemned', 'reinvent',
                          'poorly', 'henry', 'spencer', 'usenet', 'signature', 'november'])
@@ -23,7 +23,7 @@ class TestWord(unittest.TestCase):
                          'condemned', 'reinvent', 'poorly', 'henry', 'spencer', 'usenet', 'signature'])
 
     def test_word_span_tokenize(self):
-        res = list(raw_word_span_tokenize(aritcle1))
+        res = list(raw_word_span_tokenize(article1))
         res  = [s["span"] for s in res]
 
         self.assertEqual(res,[(0, 5), (6, 9), (10, 12), (13, 16), (17, 27), (28, 32), (33, 36), (37, 46), (47, 49), (50, 58), (59, 61), (61, 62), (63, 69), (69, 70), (71, 72), (73, 78), (79, 86), (86, 87), (88, 94), (95, 104), (104, 105), (106, 114), (115, 119)])

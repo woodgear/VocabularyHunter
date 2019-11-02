@@ -91,17 +91,5 @@ class DictHelper:
         if explain is None:
             return None
         exchange = parse_trans_type(explain["exchange"])
-        if exchange:
-            if "0" in exchange:
-                lemma = exchange['0']
-                lemma_explain = self.sd.query(lemma)
-                lemma_exchange = parse_trans_type(lemma_explain["exchange"])
-                # ?? why this happen?
-                if lemma_exchange is None:
-                    exchange = {**exchange, **{"0": lemma, "l": "u"}}
-                else :
-                    exchange = {**exchange, **lemma_exchange}
-            else:
-                exchange = {**exchange, **{"0": word, "l": "0"}}
         res = WordExplain(word, {**explain, **{"exchange": exchange}})
         return res

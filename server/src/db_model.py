@@ -155,24 +155,26 @@ word_invert_index {
         return record != None
         pass
 
-    def find_aritcle_meta(self, id):
+    def find_article_meta(self, id):
         record = self.db.corpus_meta(id)
         if record is None:
             return None
-        return record.as_dict()
+        record = record.as_dict()
+        record["struct"] = json.loads(record["struct"])
+        return record
 
-    def find_aritcle(self, id, span):
+    def find_article(self, id, span):
         data = self.db(self.db.corpus.corpus_id == id).select(
             self.db.corpus.content[span[0]:span[1]]).first()
         raw = list(data._extra.as_dict().values())[0]
         return raw
 
-    def save_aritcle(self, aritcle):
-        raw_aritcle = aritcle["aritcle"]
-        corpus_meta_data = {"name": aritcle["name"], "source": aritcle["source"], "type": aritcle["type"],
-                            "time": aritcle["time"], "struct": aritcle["struct"], "md5": aritcle["md5"]}
+    def save_article(self, article):
+        raw_article = article["article"]
+        corpus_meta_data = {"name": article["name"], "source": article["source"], "type": article["type"],
+                            "time": article["time"], "struct": article["struct"], "md5": article["md5"]}
         cropus_id = self.db.corpus_meta.insert(**corpus_meta_data)
-        self.db.corpus.insert(corpus_id=cropus_id, content=raw_aritcle)
+        self.db.corpus.insert(corpus_id=cropus_id, content=raw_article)
         self.db.commit()
 
         return cropus_id

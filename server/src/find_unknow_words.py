@@ -80,8 +80,8 @@ def word_span_tokenize(article):
         .filter(lambda token: not token["word"].isnumeric()))
 
 
-def tokenize(aritcle):
-    tokens = word_span_tokenize(aritcle)
+def tokenize(article):
+    tokens = word_span_tokenize(article)
     tokens = [t["word"] for t in tokens]
     return remove_duplicate(tokens)
 

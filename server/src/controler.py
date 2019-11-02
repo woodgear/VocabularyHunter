@@ -1,6 +1,7 @@
 from find_unknow_words import *
 from db_model import *
 from dicthelper import DictHelper
+from article_parser import *
 
 
 class Controller:
@@ -32,9 +33,16 @@ class Controller:
 
     def describes(self, id, words):
         explains = DictHelper().describes(words)
+        for e in explains:
+            corpus = list(query(id,e.name))
+            e["corpus"] = corpus
         know_words = self.model.get_all_know_word_by_id(id)
         unknow_words = self.model.get_all_unknow_word_by_id(id)
         return self._describes(words, explains, know_words, unknow_words)
+        pass
+
+    def save_article(self, id, article):
+        save(id,article)
         pass
 
     def _describes(self, words, explains, know_words, unknow_words):

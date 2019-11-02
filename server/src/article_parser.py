@@ -5,7 +5,6 @@ from functional import seq
 import json
 from dicthelper import DictHelper
 from db_model import *
-
 from find_unknow_words import *
 
 
@@ -14,41 +13,41 @@ def save(user_id, article_data):
     article = clear_article(article)
     url = article_data["url"]
     name = article_data["title"]
-    md5 = md5(article)
+    md5_v = md5(article)
 
-    words = words(article)
+    words = generate_words(article)
     aricle_struct = cacl_article(article)
     model = DbModel()
 
-    corpus_id = model.save_aritcle({"article": article, "name": name, "source": url, "type": "website-article",
-                                    "md5": md5, "struct": json.dump(aricle_struct), "time": datetime.datetime.now()})
+    corpus_id = model.save_article({"article": article, "name": name, "source": url, "type": "website-article",
+                                    "md5": md5_v, "struct": json.dumps(aricle_struct), "time": datetime.datetime.now()})
     model.save_word_invert_index(corpus_id, words)
     model.connect_user_and_corpus(user_id, corpus_id)
     pass
 
 
-def words(aritcle):
-    res = seq(word_span_tokenize(aritcle)).map(lambda w: (
+def generate_words(article):
+    res = seq(word_span_tokenize(article)).map(lambda w: (
         DictHelper().describe(w["word"]), w["span"])).filter(lambda w: w[0])
 
     for token in res:
         w = token[0]
         span = token[1]
-        if w.exchange and w.exchange["0"]:
-            assert aritcle[span[0]:span[1]].lower() == w.name
+        if w.exchange and "0" in w.exchange:
+            assert article[span[0]:span[1]].lower() == w.name
             yield {"span": span, "word": w.name, "lemma": w.exchange["0"]}
         else:
-            assert aritcle[span[0]:span[1]] .lower() == w.name
+            assert article[span[0]:span[1]] .lower() == w.name
             yield {"span": span, "word": w.name, "lemma": w.name}
 
 
-def query_sentence(aritcle_id, span):
-    aritcle = find_article_by_id(aritcle_id)
-    aritcle_struct = aritcle["struct"]
+def query_sentence(article_id, span):
+    article = find_article_by_id(article_id)
+    article_struct = article["struct"]
     expand_left, expand_right = generate_expand_setence_range(
         article_struct, range)
-    setence = pick_article(aritcle_id, range)
-    return {"aritcle_id": aritcle_id, "sentence": sentence, "expand_left": expand_left, "expand_right": expand_right, "title": article["title"], "url": article["url"]}
+    setence = pick_article(article_id, range)
+    return {"article_id": article_id, "sentence": sentence, "expand_left": expand_left, "expand_right": expand_right, "title": article["title"], "url": article["url"]}
 
 
 def find_sentence_span_by_word_span(corpus_struct, span):
@@ -77,9 +76,9 @@ def find_sentence_span_by_word_span(corpus_struct, span):
 
     span_index, parent = find_parent(corpus_struct, span)
     if span_index == -1:
-        return {"sentenct_span": sentenct_span, "expand_parent": None, "expand_left": None, "expand_right": None}
+        return {"sentence_span": sentence_span, "expand_parent": None, "expand_left": None, "expand_right": None}
 
-    sentenct_span = (parent["child"][span_index]["start"],
+    sentence_span = (parent["child"][span_index]["start"],
                      parent["child"][span_index]["end"])
     expand_parent = (parent["start"], parent["end"])
     expand_left_index = span_index-1
@@ -94,7 +93,7 @@ def find_sentence_span_by_word_span(corpus_struct, span):
         expand_right = (parent["child"][expand_right_index]["start"],
                         parent["child"][expand_right_index]["end"])
 
-    return {"sentenct_span": sentenct_span, "expand_parent": expand_parent, "expand_right": expand_right, "expand_left": expand_left}
+    return {"sentence_span": sentence_span, "expand_parent": expand_parent, "expand_right": expand_right, "expand_left": expand_left}
     pass
 
 
@@ -122,17 +121,18 @@ def query(user_id, word):
         corpus_id = invert_index["corpus_id"]
         model = DbModel()
 
-        corpus_meta = model.find_aritcle_meta(corpus_id)
+        corpus_meta = model.find_article_meta(corpus_id)
         struct = corpus_meta["struct"]
         name = corpus_meta["name"]
         source = corpus_meta["source"]
 
         spans = find_sentence_span_by_word_span(struct, span)
         sentence_span = spans["sentence_span"]
-        sentence = model.find_aritcle(corpus_id, sentence_span)
+        sentence = model.find_article(corpus_id, sentence_span)
         return {"word": word, "lemma": lemma, "name": name, "url": source,  "corpus_id": corpus_id, "sentence": sentence, "span": sentence_span, "expand_right": spans["expand_right"], "expand_left": spans["expand_right"], "expand_left": spans["expand_right"]}
 
-    lemma = DictHelper().find_lemma(word)
+    word = word.lower()
+    lemma = DictHelper().find_lemma(word) or word
     model = DbModel()
     index = model.find_word_invert_index(user_id, lemma)
     return seq(index).map(lambda index: find_sentence(index))
