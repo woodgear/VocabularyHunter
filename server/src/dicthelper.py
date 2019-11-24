@@ -76,7 +76,7 @@ class DictHelper:
     def find_lemma(self,word):
         explain = self.sd.query(word)
         exchange = parse_trans_type(explain["exchange"])
-        if "0" in exchange:
+        if exchange is not None and "0" in exchange:
             return exchange["0"]
         return None
 

@@ -1,5 +1,6 @@
 
 //document.body
+const NEWLINE_REGEX = new RegExp('\n', 'g')
 
 export function str2cmd(cmd) {
   function isAlpha(c) {
@@ -66,33 +67,33 @@ export function access(data, cmd) {
 
 function parser(node) {
   if (node.nodeName === "#text") {
-    return node.data
+    let txt = node.data.split('\n').join(' ')
+    return txt
   }
   if (node.nodeName === "CODE") {
     return ""
   }
 
-  let childTxt = "";
+  let data = [];
   for (let child of node.childNodes) {
-    childTxt += parser(child)
+    data = data.concat(parser(child))
   }
   if (node.nodeName === "P") {
-    childTxt += '\n'
   }
   if (node.nodeName.startsWith("H")) {
-    childTxt += '\n'
   }
   if (node.nodeName.startsWith("UL")) {
-    childTxt += '\n'
   }
   if (node.nodeName.startsWith("LI")) {
-    childTxt += '\n'
   }
-  return childTxt;
+  return data;
 }
 
 export function parserArticle(document) {
-  const title = document.querySelector("body > article > header > h1 > p").innerText;
-  const content = parser(document.querySelector("body > article > .content"));
-  return { title, content }
+  // const title = document.querySelector("body > article > header > h1 > p").innerText;
+  // const content = parser(document.querySelector("body > article > .content"));
+  const title = document.querySelector("title").innerText;
+  const content = parser(document.querySelector("body"));
+
+  return { title, content: content.join("\n") }
 }

@@ -25,9 +25,9 @@ describe('ParserArticle shoud correct', () => {
     browser = await puppeteer.launch(
       {
         executablePath,
-        // headless: false,
-        // slowMo: 3000,
-        // devtools: true
+        headless: false,
+        slowMode: 300000,
+        devtools: true
       }
     )
   })
@@ -49,16 +49,19 @@ describe('ParserArticle shoud correct', () => {
     assert.equal(result, expectTxt)
   }
 
-  it.skip('for debug parserArticle', async () => {
+  it.only('for debug parserArticle', async () => {
     const page = await browser.newPage()
-    await page.goto("file:///home/oaa/Desktop/a.html")
+    await page.goto("https://sites.fas.harvard.edu/~lib215/reference/programming/unix-esr.html")
     const domUtilPath = await buildDomUtil()
     await page.addScriptTag({ path: domUtilPath })
     const result = await page.evaluate(async () => {
       return Promise.resolve(domUtil.parserArticle(document))
     })
+    console.log(result.content)
     writeFileSync("content.data", result.content);
-    assert.equal(result.title, "I made a NES emulator in Rust using generators");
+    writeFileSync("content.data.json",JSON.stringify(result.content));
+    
+    // assert.equal(result.title, "I made a NES emulator in Rust using generators");
   }).timeout(100 * 1000)
 
   // it('should get corrent data', async () => {

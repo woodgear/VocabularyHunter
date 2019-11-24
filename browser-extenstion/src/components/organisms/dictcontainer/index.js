@@ -134,7 +134,15 @@ export default class DictContainer extends Component {
       </div>
     )
   }
-
+  renderCorpus(corpus) {
+    function renderSingleCorpus(corpus,index) {
+    return <div key={index} className="single-corpus">
+      <p className="corpus-sentence">{corpus.sentence}</p>
+    <a className="corpus-link" href={corpus.url} >{corpus.name}</a>
+      </div>
+    }
+  return <div className="corpus">{corpus.map(renderSingleCorpus)}</div>
+  }
   render () {
     if (this.props.explains.length === 0) {
       return (
@@ -145,8 +153,8 @@ export default class DictContainer extends Component {
     }
 
     const currentWord = this.props.explains[this.state.currentIndex]
+    console.log(currentWord)
     return (
-
       <div className={this.props.explains.length === 0 ? 'dict-container empty' : 'dict-container has-data'}>
         <div className="word-explain-container">
           {this.renderWordHead(
@@ -155,6 +163,7 @@ export default class DictContainer extends Component {
             currentWord.know_type
           )}
           {this.renderWordExchange(currentWord.explain.exchange)}
+          {this.renderCorpus(currentWord.explain.corpus)}
           {this.renderExplain(currentWord.explain)}
         </div>
         <div className="vh-actions">

@@ -28,7 +28,7 @@ def create_app():
 
         article = get_json_body(request)["article"]
 
-        print("hunter", id)
+        print("hunter", id,article)
         unknow_words = Controller().find_unknow_words_by_article(id, article)
         return jsonify(words=unknow_words)
 

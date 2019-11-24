@@ -1,0 +1,14 @@
+.App {
+  display: flex;
+    width:1000px ;
+  height: 500px;
+  flex-direction: row;
+}
+#input-view {
+  width: 480px;
+  height: 480px;
+}
+#article-input {
+  width: 300px;
+  height: 300px;
+}
