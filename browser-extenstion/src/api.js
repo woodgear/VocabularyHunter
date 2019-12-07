@@ -1,6 +1,6 @@
 import zlib from 'zlib'
 
-function gzip (body) {
+function gzip(body) {
   return new Promise(function (resolve, reject) {
     zlib.gzip(body, (err, buffer) => {
       if (err) {
@@ -12,12 +12,12 @@ function gzip (body) {
 }
 
 class Api {
-  constructor (id, vhServer) {
+  constructor(id, vhServer) {
     this.id = id
     this.vhServer = vhServer
   }
 
-  async hunter (article) {
+  async hunter(article) {
     const url = `${this.vhServer}/api/vh/hunter`
     const body = JSON.stringify({ article })
     const zipBody = await gzip(body)
@@ -36,7 +36,7 @@ class Api {
     }).then(res => res.words)
   }
 
-  async export () {
+  async export() {
     return fetch(`${this.vhServer}/api/vh/export/all`, {
       method: 'POST',
       headers: {
@@ -49,7 +49,7 @@ class Api {
     })
   }
 
-  async import (words) {
+  async import(words) {
     return fetch(`${this.vhServer}/api/vh/import/all`, {
       method: 'POST',
       headers: {
@@ -61,7 +61,7 @@ class Api {
     })
   }
 
-  async getExplain (words) {
+  async getExplain(words) {
     return fetch(`${this.vhServer}/api/vh/explain`, {
       method: 'POST',
       headers: {
@@ -75,7 +75,7 @@ class Api {
     })
   }
 
-  async markAsKnow (words) {
+  async markAsKnow(words) {
     return fetch(`${this.vhServer}/api/vh/mark/know`, {
       method: 'POST',
       headers: {
@@ -86,7 +86,7 @@ class Api {
     })
   }
 
-  async markAsUnKnow (words) {
+  async markAsUnKnow(words) {
     return fetch(`${this.vhServer}/api/vh/mark/unknow`, {
       method: 'POST',
       headers: {
@@ -94,6 +94,17 @@ class Api {
         'content-type': 'application/json'
       },
       body: JSON.stringify({ words })
+    })
+  }
+
+  async saveCorpus(article, title, url) {
+    return fetch(`${this.vhServer}/api/vh/corpus`, {
+      method: 'POST',
+      headers: {
+        id: this.id,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ article, title, url })
     })
   }
 }

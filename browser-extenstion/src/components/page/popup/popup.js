@@ -30,7 +30,7 @@ class PopUp extends Component {
     bt.sendToContentScript({ action: 'parser' }).then(async ({ article }) => {
       if (article) {
         console.log(article)
-        const words = await this.api.hunter(article)
+        const words = await this.api.hunter(article.content)
         const explains = await this.api.getExplain(words)
         console.log(explains)
         this.setState({ explains })

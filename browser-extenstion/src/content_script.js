@@ -9,14 +9,20 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       : 'from the extension'
   )
   if (msg.action === 'parser') {
-    const res = onParserArticle()
-    console.log(res)
+    const article = onParserArticle()
+    console.log(res,JSON.stringify({article}))
 
     sendResponse(res)
   }
+
+  if (msg.action==="saveCorpus") {
+    const {title,content} = onParserArticle();
+    const url = window.location.href;
+    sendResponse({title,article:content,url})
+  }
+
 })
 
 function onParserArticle () {
-  console.log('onParserArticle')
-  return { article: parserArticle(document.body) }
+  return  parserArticle(document)
 }

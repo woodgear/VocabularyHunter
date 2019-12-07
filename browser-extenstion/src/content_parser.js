@@ -90,8 +90,6 @@ function parser(node) {
 }
 
 export function parserArticle(document) {
-  // const title = document.querySelector("body > article > header > h1 > p").innerText;
-  // const content = parser(document.querySelector("body > article > .content"));
   const title = document.querySelector("title").innerText;
   const content = parser(document.querySelector("body"));
 
