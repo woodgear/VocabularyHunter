@@ -32,11 +32,6 @@ class DcitMain extends Component {
   }
 
   componentDidMount() {
-    this.api.getExplain(["Durability"]).then(explains => {
-      this.setState({ explains: explains })
-    })
-
-
   }
 
   renderInput() {

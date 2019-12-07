@@ -14,17 +14,26 @@ async function saveCorpus() {
 }
 
 function initRightClickMenu() {
-  const title = "save this article to vh";
-  const id = chrome.contextMenus.create({
-    "title": title,
-    "contexts": ["all"],
+  const saveArticleItemId = chrome.contextMenus.create({
+    "title": "save this article to vh",
+    "contexts": ["page"],
     "id": "vh-right-click-save-article"
   });
 
+  const dictMainItemId = chrome.contextMenus.create({
+    "title": "dict mode",
+    "contexts": ["all"],
+    "id": "vh-right-click-jump-to-dict"
+  });
+  console.log("dictMainItemId", dictMainItemId)
   chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (info.menuItemId === id) {
+    if (info.menuItemId === saveArticleItemId) {
       saveCorpus()
     }
+    if (info.menuItemId === dictMainItemId) {
+      chrome.tabs.create({ url: chrome.runtime.getURL("dict_main.html") });
+    }
+    
   });
 
 }
