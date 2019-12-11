@@ -28,8 +28,11 @@ export async function sendToContentScript (msg, timeout = 3) {
       rej('time out')
     }, timeoutMills)
     try {
+      console.log("start try send");
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        console.log("find tab");
         chrome.tabs.sendMessage(tabs[0].id, msg, function (response) {
+          console.log("rece response",response)
           clearTimeout(timeoutHandle)
           res(response)
         })

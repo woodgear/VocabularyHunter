@@ -27,9 +27,10 @@ class PopUp extends Component {
   }
 
   componentDidMount () {
-    bt.sendToContentScript({ action: 'parser' }).then(async ({ article }) => {
+    console.log("load popup");
+    bt.sendToContentScript({ action: 'parser' }).then(async ( article) => {
       if (article) {
-        console.log(article)
+        console.log('xxxxxxxxxx',article)
         const words = await this.api.hunter(article.content)
         const explains = await this.api.getExplain(words)
         console.log(explains)

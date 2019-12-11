@@ -8,6 +8,10 @@ import os
 STAR_DICT_SQLITE = os.getenv(
     "STAR_DICT_SQLITE") or "./dict/ecdict/stardict.sqlite"
 
+def or_(left,right):
+    if left is None:
+        return right
+    return left
 
 class WordPos:
     def __init__(self, pos_str):
@@ -25,14 +29,16 @@ class WordExplain(dict):
             self.pos = WordPos(data["pos"])
         else:
             self.pos = None
+
+        
         self.name = name  # string
         self.phonetic = data["phonetic"]
         self.collins = data["collins"]
         self.oxford = data["oxford"]
         self.frq = data["frq"]
-        self.definitions = data["definition"].splitlines()
-        self.translations = data["translation"].splitlines()
-        self.tags = data["tag"].split(' ')
+        self.definitions = or_(data["definition"],"").splitlines()
+        self.translations = or_(data["translation"],"").splitlines()
+        self.tags = or_(data["tag"],"").split(' ')
         self.audio = data["audio"]
         self.exchange = data["exchange"]
         pass
@@ -54,7 +60,7 @@ class WordExplain(dict):
 
 
 def parse_trans_type(exchange):
-    if exchange == "":
+    if exchange == "" or exchange is None:
         return None
     explain = exchange.split('/')
     data = {}
@@ -70,7 +76,10 @@ def init_star_dict():
 
 class DictHelper:
     def __init__(self):
-        self.sd = init_star_dict()
+        try:
+            self.sd = init_star_dict()
+        except Exception as e:
+            print(e)  
         pass
 
     def find_lemma(self,word):

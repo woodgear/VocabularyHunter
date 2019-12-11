@@ -6,7 +6,6 @@ from orderedset import OrderedSet
 import nltk
 from nltk.tokenize.treebank import TreebankWordTokenizer
 from nltk.tokenize import sent_tokenize
-from nltk.tokenize import span_sent_tokenize
 
 from nltk.tokenize import word_tokenize
 from nltk.tokenize.punkt import PunktSentenceTokenizer
