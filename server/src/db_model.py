@@ -28,6 +28,8 @@ class DbModel:
         pass
 
     def _init_db(self):
+        if not os.path.exists(self.folder_path):
+            os.mkdir(self.folder_path)
         sqlite_uri = f'sqlite://{self.db_name}.sqlite'
         self.db = DAL(sqlite_uri, folder=self.folder_path)
         # TODO  pydal会自动自动创建id字段为自增主键 user-id 是不是多余了
