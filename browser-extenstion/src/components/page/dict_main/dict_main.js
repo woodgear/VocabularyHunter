@@ -17,9 +17,11 @@ class DcitMain extends Component {
     this.state = {
       article: '',
       explains: [],
-      word: "",
-      article: ""
+      words: [],
+      article: "",
+      current_explain_index:0
     }
+
     this.actions = {
       markKnow: async word => {
         await this.api.markAsKnow([word])
@@ -27,7 +29,16 @@ class DcitMain extends Component {
       },
       markUnKnow: async word => {
         await this.api.markAsUnKnow([word])
+      },
+      getMoreExplain: async (step) => {
+        const words = this.state.words;
+        const current_explain_index = this.state.current_explain_index;
+        const end_index = current_explain_index + step < words.length ? current_explain_index + step : words.length;
+        const explains = await this.api.getExplain(words.slice(current_explain_index, end_index));
+        const filledExplains = this.state.explains.concat(explains);
+        this.setState({ explains: filledExplains, current_explain_index: end_index })
       }
+
     }
   }
 
@@ -39,7 +50,7 @@ class DcitMain extends Component {
       <div id="single-word">
         <span>查询单个单词:</span>
         <input id="word-input" onInput={(event) => {
-          this.setState({ word: event.target.value })
+          this.setState({ words: [event.target.value] })
         }
         } />
       </div>
@@ -53,15 +64,11 @@ class DcitMain extends Component {
       </div>
       <div>
         <button id="search" onClick={async () => {
-          let explain = []
           if (this.state.article !== "") {
             const words = await this.api.hunter(this.state.article);
-            explain = await this.api.getExplain(words)
-          } else {
-            explain = await this.api.getExplain([this.state.word])
+            this.setState({ words })
           }
-          this.setState({ explains: explain })
-
+          this.actions.getMoreExplain(10);
         }}>查询</button>
       </div>
 
@@ -71,7 +78,9 @@ class DcitMain extends Component {
     return (
       <div className="App">
         {this.renderInput()}
-        <DictContainer explains={this.state.explains} actions={this.actions} />
+        <DictContainer explains={this.state.explains}
+          totalExplainsLength={this.state.words.length}
+          actions={this.actions} />
       </div>
     )
   }

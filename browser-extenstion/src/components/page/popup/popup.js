@@ -11,10 +11,10 @@ class PopUp extends Component {
     vhServer: PropTypes.string
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.api = new Api(this.props.userId, this.props.vhServer)
-    this.state = { article: '', explains: [] }
+    this.state = { article: '', explains: [], words: [], current_explain_index: 0 }
     this.actions = {
       markKnow: async word => {
         await this.api.markAsKnow([word])
@@ -22,29 +22,36 @@ class PopUp extends Component {
       },
       markUnKnow: async word => {
         await this.api.markAsUnKnow([word])
+      },
+      getMoreExplain: async (step) => {
+        const words = this.state.words;
+        const current_explain_index = this.state.current_explain_index;
+        const end_index = current_explain_index + step < words.length ? current_explain_index + step : words.length;
+        const explains = await this.api.getExplain(words.slice(current_explain_index, end_index));
+        const filledExplains = this.state.explains.concat(explains);
+
+        this.setState({ explains: filledExplains, current_explain_index: end_index })
       }
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log("load popup");
-    bt.sendToContentScript({ action: 'parser' }).then(async ( article) => {
+    bt.sendToContentScript({ action: 'parser' }).then(async (article) => {
       if (article) {
-        console.log('xxxxxxxxxx',article)
         const words = await this.api.hunter(article.content)
-        const explains = await this.api.getExplain(words)
-        console.log(explains)
-        this.setState({ explains })
+        this.setState({ words: words })
+        this.actions.getMoreExplain(10);
       } else {
         console.log('??? why undefine ???')
       }
     })
   }
 
-  render () {
+  render() {
     return (
       <div className="App">
-        <DictContainer explains={this.state.explains} actions={this.actions} />
+        <DictContainer explains={this.state.explains} totalExplainsLength={this.state.words.length} actions={this.actions} />
       </div>
     )
   }
