@@ -71,17 +71,15 @@ def parse_trans_type(exchange):
 
 
 def init_star_dict():
+    if not os.path.exists(STAR_DICT_SQLITE):
+        raise Exception(f"could not find ecdict path at {STAR_DICT_SQLITE}")
     return StarDict(STAR_DICT_SQLITE)
 
 
 class DictHelper:
     def __init__(self):
-        try:
-            self.sd = init_star_dict()
-        except Exception as e:
-            print(e)  
-        pass
-
+        self.sd = init_star_dict()
+ 
     def find_lemma(self,word):
         explain = self.sd.query(word)
         exchange = parse_trans_type(explain["exchange"])

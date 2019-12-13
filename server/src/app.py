@@ -87,7 +87,7 @@ def create_app():
         words = get_json_body(request)["words"]
         res = Controller().describes(id, words)
         elapsed_time = time.time() - start_time
-        print(f"explain {len(words)} elapsed_time {elapsed_time*1000}")
+        print(f"explain {len(words)} elapsed_time {elapsed_time*1000} {res}")
         return jsonify(util.to_json_serializable(res))
 
     @app.route('/api/vh/corpus', methods=['POST'])
