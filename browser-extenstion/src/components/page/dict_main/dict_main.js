@@ -19,7 +19,7 @@ class DcitMain extends Component {
       explains: [],
       words: [],
       article: "",
-      current_explain_index:0
+      current_explain_index: 0
     }
 
     this.actions = {
@@ -33,8 +33,12 @@ class DcitMain extends Component {
       getMoreExplain: async (step) => {
         const words = this.state.words;
         const current_explain_index = this.state.current_explain_index;
+
         const end_index = current_explain_index + step < words.length ? current_explain_index + step : words.length;
-        const explains = await this.api.getExplain(words.slice(current_explain_index, end_index));
+        const wordNeedExplain = words.slice(current_explain_index, end_index);
+
+        const explains = await this.api.getExplain(wordNeedExplain);
+        console.log("explains", explains);
         const filledExplains = this.state.explains.concat(explains);
         this.setState({ explains: filledExplains, current_explain_index: end_index })
       }
@@ -64,11 +68,18 @@ class DcitMain extends Component {
       </div>
       <div>
         <button id="search" onClick={async () => {
-          if (this.state.article !== "") {
+          if (this.state.article !== '') {
             const words = await this.api.hunter(this.state.article);
-            this.setState({ words })
+            this.setState({ words, current_explain_index: 0, explains: [] }, () => {
+              this.actions.getMoreExplain(10);
+            })
+          } else {
+            this.setState({ current_explain_index: 0, explains: [] }, () => {
+              this.actions.getMoreExplain(10);
+            })
+
           }
-          this.actions.getMoreExplain(10);
+
         }}>查询</button>
       </div>
 
@@ -79,6 +90,7 @@ class DcitMain extends Component {
       <div className="App">
         {this.renderInput()}
         <DictContainer explains={this.state.explains}
+          currentIndex={0}
           totalExplainsLength={this.state.words.length}
           actions={this.actions} />
       </div>

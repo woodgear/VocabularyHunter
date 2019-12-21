@@ -27,6 +27,10 @@ export default class DictContainer extends Component {
     this.getMoreExplain = this.getMoreExplain.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ currentIndex: nextProps.currentIndex });
+  }
+
   onClickPre() {
     const commingIndex =
       (this.state.currentIndex - 1 + this.props.explains.length) %
@@ -44,7 +48,7 @@ export default class DictContainer extends Component {
       return [should, commingIndex];
     }
 
-    const [should, commingIndex] = should_get_more(this.props.explains.length, this.props.totalExplainsLength,  this.state.currentIndex);
+    const [should, commingIndex] = should_get_more(this.props.explains.length, this.props.totalExplainsLength, this.state.currentIndex);
     if (should) {
       this.getMoreExplain(5).then(() => {
         this.setState({ currentIndex: commingIndex })
@@ -148,6 +152,7 @@ export default class DictContainer extends Component {
       </div>
     )
   }
+
   renderCorpus(corpus) {
     function renderSingleCorpus(corpus, index) {
       return <div key={index} className="single-corpus">
@@ -157,7 +162,9 @@ export default class DictContainer extends Component {
     }
     return <div className="corpus">{corpus.map(renderSingleCorpus)}</div>
   }
+  
   render() {
+    console.log("render ??", this.state, this.props.currentIndex);
     if (this.props.explains.length === 0) {
       return (
         <div className="dict-container empty">
