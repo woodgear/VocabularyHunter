@@ -1,5 +1,5 @@
 import unittest
-from find_unknow_words import *
+from nltk_wrapper import *
 
 article1 = """Those who do not understand Unix are condemned to reinvent it, poorly.
 – Henry Spencer, Usenet signature, November 1987

@@ -1,4 +1,4 @@
-from find_unknow_words import *
+from nltk_wrapper import *
 from db_model import *
 from dicthelper import DictHelper
 from article_parser import *

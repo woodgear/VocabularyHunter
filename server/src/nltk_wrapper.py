@@ -1,3 +1,5 @@
+# all the thing that relatived to nltk
+
 import os
 import sys
 import time
@@ -10,8 +12,8 @@ from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
 from nltk.tokenize.punkt import PunktSentenceTokenizer
 from nltk.data import load
+from typing import *
 
-import util
 import re
 
 
@@ -38,7 +40,7 @@ def init_treebank_wordtokenizer():
 _treebank_word_tokenizer = init_treebank_wordtokenizer()
 
 
-def span_tokenize(sentence):
+def span_tokenize(sentence:str)->List[Tuple[int,int]]:
     return _treebank_word_tokenizer.span_tokenize(sentence)
     pass
 

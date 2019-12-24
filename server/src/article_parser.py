@@ -5,7 +5,7 @@ from functional import seq
 import json
 from dicthelper import DictHelper
 from db_model import *
-from find_unknow_words import *
+from nltk_wrapper import *
 
 
 def save(user_id, article_data):
