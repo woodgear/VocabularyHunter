@@ -1,6 +1,3 @@
-/* .dict-container:hover {
-  box-shadow: 0 8px 56px 0 rgba(0,0,0,0.2);
-} */
 
 .dict-container {
   min-height: 480px;
@@ -74,4 +71,12 @@
 .vh-actions {
   display: flex;
   justify-content: center;
+}
+
+.corpus {
+}
+
+.single-corpus {
+  border-bottom: 1px solid springgreen;
+  margin-bottom: 2px;
 }

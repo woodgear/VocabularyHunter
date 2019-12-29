@@ -16,7 +16,7 @@ export default class Sound extends Component {
   }
 
   render () {
-    const soundUrl = `https://ssl.gstatic.com/dictionary/static/sounds/oxford/${this.props.word}--_gb_1.mp3`
+    const soundUrl = `https://ssl.gstatic.com/dictionary/static/sounds/oxford/${this.props.word.toLowerCase()}--_gb_1.mp3`
 
     return (<div className="sound">
       <img src={soudIcon} onClick={() => {

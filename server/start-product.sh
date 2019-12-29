@@ -1,1 +1,1 @@
-waitress-serve --call 'wsgi:app'
+waitress-serve --port=10000 --call 'wsgi:app'

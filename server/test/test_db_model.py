@@ -3,8 +3,12 @@ from pathlib import Path
 from db_model import * 
 import shutil
 import time
+import datetime
+
 import gc
 FOLDER_PATH = "test-db"
+
+
 class TestDbModel(unittest.TestCase):
     def setUp(self):
         print(self.id(),"setUp")
@@ -61,6 +65,51 @@ class TestDbModel(unittest.TestCase):
         self.assertEqual(knowWords,["juice"])
 
         pass
+    def test_save_article(self):
+        print(self.id())
+        self.model = DbModel(folder_path=FOLDER_PATH)
+        db = self.model._db()
+        now = datetime.datetime(2019, 11, 1, 1, 4, 48)
+        raw_article = "123456789"
+        article =  {"article":raw_article,"name":"name","source":"https://xxx.com","type":"website-article",
+        "struct":"{}",
+        "md5":"md5","time":now}
+        corpus_id = self.model.save_article(article)
+        meta  = self.model.find_article_meta(corpus_id)
+        print("meta",meta)
+        self.assertEqual(meta,{'id': 1, 'md5': 'md5', 'type': 'website-article', 'struct': {},'time': now, 'source': 'https://xxx.com', 'name': 'name'})
+        data = self.model.find_article(corpus_id,(1,2))
+        self.assertEqual(data,raw_article[1:2])
+        data = self.model.find_article(corpus_id,(0,7))
+        self.assertEqual(data,raw_article[0:7])
+        self.assertEqual(True,self.model.has_article({"md5":"md5"}))
+        self.assertEqual(False,self.model.has_article({"md5":"mddxxx5"}))
+
+        print(data)
+        pass
+    def test_save_word_invert_index(self):
+        mock_word_invert = [{'span': (0, 4), 'word': 'apple', 'lemma': 'apple'}]
+
+        raw_article = "apple is tree."
+        article =  {"article":raw_article,"name":"name","source":"https://xxx.com","type":"website-article",
+        "struct":"xxxxx",
+        "md5":"md5","time":datetime.datetime.now()}
+        self.model = DbModel(folder_path=FOLDER_PATH)
+        corpus_id_1 = self.model.save_article(article)
+      
+        self.model.connect_user_and_corpus("user_1",corpus_id_1)
+        self.model.save_word_invert_index(corpus_id_1,mock_word_invert)
+        res = list(self.model.find_word_invert_index("user_1","apple"))
+        print("res ",res)
+        self.assertEqual(res,[{'word': 'apple', 'lemma': 'apple', 'corpus_id': 1, 'span': [0, 4]}])
+
+        res = list(self.model.find_word_invert_index("user_2","apple"))
+        self.assertEqual(res,[])
+        self.model.connect_user_and_corpus("user_2",corpus_id_1)
+        res = list(self.model.find_word_invert_index("user_2","apple"))
+        self.assertEqual(res,[{'word': 'apple', 'lemma': 'apple', 'corpus_id': 1, 'span': [0, 4]}])
+        pass
+
 
 
 

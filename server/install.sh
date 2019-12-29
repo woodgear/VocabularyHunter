@@ -1,7 +1,9 @@
-pip3 install pyfunctional
-pip3 install nltk
-pip3 install orderedset
-pip3 install pyDAL
-pip3 install flask
-pip3 install  waitress-serve
-pip install Flask-gzip
+pip3 install pyfunctional --user
+pip3 install nltk --user
+pip3 install orderedset --user
+pip3 install pyDAL --user
+pip3 install flask --user
+pip3 install flask-cors --user
+pip3 install  waitress-serve --user
+pip install Flask-gzip --user
+

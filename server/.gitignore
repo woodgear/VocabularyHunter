@@ -1,5 +1,4 @@
 __pycache__
-db_storage/*
+vol/
 venv
-dict
 *.pyc

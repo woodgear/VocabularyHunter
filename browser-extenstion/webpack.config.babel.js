@@ -11,7 +11,8 @@ function defaultConfig () {
       popup: './src/components/page/popup/index.js', // 工具栏弹窗
       background_script: './src/background_script.js', // 后台脚本
       content_script: './src/content_script.js', // 后台脚本
-      options: './src/components/page/options/index.js' // 配置界面
+      options: './src/components/page/options/index.js' ,// 配置界面
+      dict_main: './src/components/page/dict_main/index.js' // 词典模式主界面
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -27,6 +28,14 @@ function defaultConfig () {
         filename: '[name].css',
         chunkFilename: '[id].css',
         ignoreOrder: false // Enable to remove warnings about conflicting order
+      }),
+      new HtmlWebPackPlugin({
+        template: './src/components/page/dict_main/index.html',
+        filename: 'dict_main.html',
+        title: 'dict_main',
+        chunks: ['dict_main'],
+        chunksSortMode: 'manual',
+        inject: 'body'
       }),
       new HtmlWebPackPlugin({
         template: './src/components/page/popup/index.html',

@@ -7,24 +7,31 @@ export default class DictContainer extends Component {
   static propTypes = {
     explains: PropTypes.arrayOf(PropTypes.object),
     currentIndex: PropTypes.number,
+    totalExplainsLength: PropTypes.number,
     actions: PropTypes.object
   };
 
   static defaultProps = {
     explains: [],
-    currentIndex: 0
+    currentIndex: 0,
+    totalExplainsLength: 0,
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { currentIndex: this.props.currentIndex }
     this.onClickNext = this.onClickNext.bind(this)
     this.onClickPre = this.onClickPre.bind(this)
     this.markKnow = this.markKnow.bind(this)
     this.markUnKnow = this.markUnKnow.bind(this)
+    this.getMoreExplain = this.getMoreExplain.bind(this)
   }
 
-  onClickPre () {
+  componentWillReceiveProps(nextProps) {
+    this.setState({ currentIndex: nextProps.currentIndex });
+  }
+
+  onClickPre() {
     const commingIndex =
       (this.state.currentIndex - 1 + this.props.explains.length) %
       this.props.explains.length
@@ -33,23 +40,32 @@ export default class DictContainer extends Component {
     })
   }
 
-  onClickNext () {
-    const commingIndex =
-      (this.state.currentIndex + 1 + this.props.explains.length) %
-      this.props.explains.length
-    this.setState({
-      currentIndex: commingIndex
-    })
+  onClickNext() {
+    function should_get_more(currentExplainLength, totalExplainsLength, currentIndex) {
+      const commingIndex = (currentIndex + 1 + totalExplainsLength) % totalExplainsLength;
+      const preloadIndex = commingIndex + 10;
+      const should = preloadIndex > currentExplainLength && currentExplainLength < totalExplainsLength;
+      return [should, commingIndex];
+    }
+
+    const [should, commingIndex] = should_get_more(this.props.explains.length, this.props.totalExplainsLength, this.state.currentIndex);
+    if (should) {
+      this.getMoreExplain(5).then(() => {
+        this.setState({ currentIndex: commingIndex })
+      })
+    } else {
+      this.setState({ currentIndex: commingIndex })
+    }
   }
 
-  getCurrentWordName () {
+  getCurrentWordName() {
     if (this.state.currentIndex <= this.props.explains.length) {
       return this.props.explains[this.state.currentIndex].explain.name
     }
     return null
   }
 
-  async markKnow () {
+  async markKnow() {
     const word = this.getCurrentWordName()
     if (word) {
       this.props.actions.markKnow(word)
@@ -57,7 +73,7 @@ export default class DictContainer extends Component {
     }
   }
 
-  async markUnKnow () {
+  async markUnKnow() {
     const word = this.getCurrentWordName()
     if (word) {
       await this.props.actions.markUnKnow(word)
@@ -65,7 +81,11 @@ export default class DictContainer extends Component {
     }
   }
 
-  renderWordExchange (exchange) {
+  async getMoreExplain(step) {
+    await this.props.actions.getMoreExplain(step);
+  }
+
+  renderWordExchange(exchange) {
     if (exchange) {
       return (
         <div className="word-exchange">
@@ -78,18 +98,16 @@ export default class DictContainer extends Component {
           })}
         </div>
       )
-    } else {
-
     }
   }
 
-  renderSound (word) {
+  renderSound(word) {
     return (<div className="sound">
-      <Sound word={word}/>
+      <Sound word={word} />
     </div>)
   }
 
-  renderWordHead (name, phonetic, knowType) {
+  renderWordHead(name, phonetic, knowType) {
     console.log(name, phonetic, knowType)
     const knowTypeEle = (knowType => {
       if (knowType === 'know') {
@@ -108,13 +126,13 @@ export default class DictContainer extends Component {
         {this.renderSound(name)}
         <div className="knowtype"><span>{knowTypeEle}</span></div>
         <div className="word-index">
-          <span>{this.state.currentIndex + 1}/{this.props.explains.length}</span>
+          <span>{this.state.currentIndex + 1}/{this.props.totalExplainsLength}</span>
         </div>
       </div>
     )
   }
 
-  renderExplain (explain) {
+  renderExplain(explain) {
     return (
       <div className="word-explain">
         <div className="word-explain-zh">
@@ -135,7 +153,18 @@ export default class DictContainer extends Component {
     )
   }
 
-  render () {
+  renderCorpus(corpus) {
+    function renderSingleCorpus(corpus, index) {
+      return <div key={index} className="single-corpus">
+        <p className="corpus-sentence">{corpus.sentence}</p>
+        <a className="corpus-link" href={corpus.url} >{corpus.name}</a>
+      </div>
+    }
+    return <div className="corpus">{corpus.map(renderSingleCorpus)}</div>
+  }
+  
+  render() {
+    console.log("render ??", this.state, this.props.currentIndex);
     if (this.props.explains.length === 0) {
       return (
         <div className="dict-container empty">
@@ -145,8 +174,8 @@ export default class DictContainer extends Component {
     }
 
     const currentWord = this.props.explains[this.state.currentIndex]
+    console.log(currentWord)
     return (
-
       <div className={this.props.explains.length === 0 ? 'dict-container empty' : 'dict-container has-data'}>
         <div className="word-explain-container">
           {this.renderWordHead(
@@ -155,6 +184,7 @@ export default class DictContainer extends Component {
             currentWord.know_type
           )}
           {this.renderWordExchange(currentWord.explain.exchange)}
+          {this.renderCorpus(currentWord.explain.corpus)}
           {this.renderExplain(currentWord.explain)}
         </div>
         <div className="vh-actions">

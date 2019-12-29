@@ -1,6 +1,7 @@
-from find_unknow_words import *
+from nltk_wrapper import *
 from db_model import *
 from dicthelper import DictHelper
+from article_parser import *
 
 
 class Controller:
@@ -26,15 +27,22 @@ class Controller:
 
     def find_unknow_words_by_article(self, id, article):
         know_words = self.model.get_all_know_word_by_id(id)
-        unknow = find_unknow_word(tokens(article), know_words)
+        unknow = find_unknow_word(tokenize(article), know_words)
         return unknow
         pass
 
     def describes(self, id, words):
         explains = DictHelper().describes(words)
+        for e in explains:
+            corpus = list(query(id,e.name))
+            e["corpus"] = corpus
         know_words = self.model.get_all_know_word_by_id(id)
         unknow_words = self.model.get_all_unknow_word_by_id(id)
         return self._describes(words, explains, know_words, unknow_words)
+        pass
+
+    def save_article(self, id, article):
+        save(id,article)
         pass
 
     def _describes(self, words, explains, know_words, unknow_words):

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vh-server
+  labels:
+    app: vh-server
+spec:
+  containers:
+  - name: vh-server
+    image: wucong/vh-server:19-12-29-23-04-56_dev_0.1
+    volumeMounts:
+    - name: vh-dict-volume
+      mountPath: /vh/vol/vh-dict
+    - name: vh-user-volume
+      mountPath: /vh/vol/vh-user
+  volumes:
+  - name: vh-user-volume
+    gcePersistentDisk:
+        pdName: vh-user
+        fsType: ext4
+  - name: vh-dict-volume
+    gcePersistentDisk:
+        pdName: vh-dict
+        fsType: ext4

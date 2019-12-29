@@ -1,4 +1,12 @@
 import json
+import hashlib
+
+def md5(data):
+    hl = hashlib.md5()
+    hl.update(data.encode(encoding='utf-8'))
+    return  hl.hexdigest()
+
+
 def read_to_string(path):
     with open(path,'r',encoding='utf8') as f:
         output = f.read()

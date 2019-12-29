@@ -10,25 +10,30 @@ import gzip
 
 def get_json_body(request):
         body = request.data
-        if request.headers["Content-Encoding"] == "gzip":
+        if "Content-Encoding" in request.headers and request.headers["Content-Encoding"] == "gzip":
             body = gzip.decompress(body)
             body = json.loads(body)
         else:
-            body = request.json()
+            body = request.json
         return body
 
 
 def create_app():
+    print("start app")
     app = Flask(__name__)
     CORS(app)
     Gzip(app)
+    @app.route('/ping', methods=['GET'])
+    def ping():
+        return "pong"
+
     @app.route('/api/vh/hunter', methods=['POST'])
     def hunter():
         id = request.headers.get('id')
 
         article = get_json_body(request)["article"]
 
-        print("hunter", id)
+        print("hunter", id,article)
         unknow_words = Controller().find_unknow_words_by_article(id, article)
         return jsonify(words=unknow_words)
 
@@ -87,7 +92,18 @@ def create_app():
         words = get_json_body(request)["words"]
         res = Controller().describes(id, words)
         elapsed_time = time.time() - start_time
-        print(f"explain {len(words)} elapsed_time {elapsed_time*1000}")
+        print(f"explain {len(words)} elapsed_time {elapsed_time*1000} {res}")
         return jsonify(util.to_json_serializable(res))
+
+    @app.route('/api/vh/corpus', methods=['POST'])
+    def add_corpus():
+        start_time = time.time()
+        id = request.headers.get('id')
+        print("add_corpus",id)
+        words = get_json_body(request)
+        res = Controller().save_article(id, words)
+        elapsed_time = time.time() - start_time
+        print(f"collection  elapsed_time {elapsed_time*1000}")
+        return jsonify(success=True)
 
     return app

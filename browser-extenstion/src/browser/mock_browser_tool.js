@@ -17,7 +17,7 @@ export async function sendToContentScript (msg, timeout = 3) {
 
 export async function getDevConfig () {
   return {
-    userId: 'mock-id',
+    userId: 'mock_id',
     vhServer: 'http://127.0.0.1:10000'
   }
 }
