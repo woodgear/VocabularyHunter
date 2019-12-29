@@ -6,7 +6,7 @@ import util
 import os
 
 STAR_DICT_SQLITE = os.getenv(
-    "STAR_DICT_SQLITE") or "./dict/ecdict/stardict.db"
+    "STAR_DICT_SQLITE") or "./vol/vh-dict/stardict.db"
 
 def or_(left,right):
     if left is None:

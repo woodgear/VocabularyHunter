@@ -1,6 +1,4 @@
-from nltk.tokenize import sent_tokenize
 from util import *
-from nltk.tokenize.punkt import PunktSentenceTokenizer
 from functional import seq
 import json
 from dicthelper import DictHelper

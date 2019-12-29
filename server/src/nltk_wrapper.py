@@ -44,16 +44,13 @@ def span_tokenize(sentence:str)->List[Tuple[int,int]]:
     return _treebank_word_tokenizer.span_tokenize(sentence)
     pass
 
-
-def remove_duplicate(data_list):
-    return list(OrderedSet(data_list))
-
-
 def sentence_span_tokenize(article):
     tokenizer = load('tokenizers/punkt/{0}.pickle'.format("english"))
     return tokenizer.span_tokenize(article)
     pass
 
+def remove_duplicate(data_list):
+    return list(OrderedSet(data_list))
 
 def raw_word_span_tokenize(article):
     sentences = sentence_span_tokenize(article)

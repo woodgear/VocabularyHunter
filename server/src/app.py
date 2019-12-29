@@ -19,9 +19,14 @@ def get_json_body(request):
 
 
 def create_app():
+    print("start app")
     app = Flask(__name__)
     CORS(app)
     Gzip(app)
+    @app.route('/ping', methods=['GET'])
+    def ping():
+        return "pong"
+
     @app.route('/api/vh/hunter', methods=['POST'])
     def hunter():
         id = request.headers.get('id')

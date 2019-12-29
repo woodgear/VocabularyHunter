@@ -16,7 +16,7 @@ class DbModel:
 
     """
 
-    def __init__(self, db_name="vh", folder_path="db_storage"):
+    def __init__(self, db_name="vh", folder_path="vol/vh-user"):
         self.db_name = db_name
         self.folder_path = folder_path
         self._init_db()
