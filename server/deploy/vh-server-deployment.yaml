@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         editor: vim
+        app: vh-server
     spec:
         containers:
         - image: wucong/vh-server:19-12-29-23-04-56_dev_0.1
