@@ -17,6 +17,7 @@ async function build () {
   const crxBuffer = await crx.load('./dist').then((crx) => crx.pack())
   fs.writeFileSync('./vh.crx', crxBuffer)
 }
-
+console.log("start to build")
+fs.writeFileSync("./out.debug","xxxx")
 build()
 console.log("build over");
