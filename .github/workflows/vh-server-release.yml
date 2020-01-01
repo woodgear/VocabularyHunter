@@ -37,7 +37,7 @@ jobs:
           ./github-ci-push-image.sh ${GITHUB_REF}
 
     - name: push release image to dockerhub
-      if: startsWith(github.ref,'refs/tags/vh-server-v')
+      if: startsWith(github.ref,'refs/tags/vh-server-product-v')
       run: |
           cd server
           ./github-ci-push-image.sh ${GITHUB_REF}
