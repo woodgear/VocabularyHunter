@@ -1,10 +1,26 @@
 import unittest
 import util
 from article_parser import *
+import os
+import sys
+sys.path.insert(0, os.path.abspath('./lib/ECDICT'))
+from stardict import convert_dict
 data = """ So, I took this challenge myself and came out the other end with a pretty limited NES emulator, which I call Lochnes. It’s not very good at actually emulating most games, but I’m pretty happy with the guts of the thing and I learned a lot a long the way. I figured it might be worthwhile to share my approach, which might help or inspire others on their own emulation venture!"""
 
-# data = read_to_string("./mock_data/content.data")
 class Test(unittest.TestCase):
+    def setUp(self):
+        print("setUp")
+        os.makedirs("./mock_data/vol/vh-dict")
+        mock_dict_sqlite = "./mock_data/vol/vh-dict/mock_dict.db"
+        mock_dict_csv = "./mock_data/mock_dict.csv"
+
+        convert_dict(mock_dict_sqlite,mock_dict_csv)        
+        os.environ["STAR_DICT_SQLITE"] = mock_dict_sqlite
+
+    def tearDown(self):
+        os.system('rm -rf ./mock_data/vol')
+        print("tearDown")
+
     def test_paragraph(self):
         res = cacl_paragraph(data)
         print(res)
@@ -27,8 +43,8 @@ class Test(unittest.TestCase):
         pass
 
     def test_words(self):
-        # data = "So, I took this challenge myself and came out the other end with a pretty limited NES emulator, which I call Lochnes."
         res = clear_article(data)
+        print(res)
         res = generate_words(res)
         for w in res:
             # print(w)

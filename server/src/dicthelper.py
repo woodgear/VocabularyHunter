@@ -5,9 +5,6 @@ from stardict import  *
 import util
 import os
 
-STAR_DICT_SQLITE = os.getenv(
-    "STAR_DICT_SQLITE") or "./vol/vh-dict/stardict.db"
-
 def or_(left,right):
     if left is None:
         return right
@@ -71,6 +68,8 @@ def parse_trans_type(exchange):
 
 
 def init_star_dict():
+    STAR_DICT_SQLITE = os.getenv(
+    "STAR_DICT_SQLITE") or "./vol/vh-dict/stardict.db"
     if not os.path.exists(STAR_DICT_SQLITE):
         raise Exception(f"could not find ecdict path at {STAR_DICT_SQLITE}")
     return StarDict(STAR_DICT_SQLITE)
