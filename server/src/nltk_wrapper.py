@@ -45,7 +45,7 @@ def span_tokenize(sentence:str)->List[Tuple[int,int]]:
     pass
 
 def sentence_span_tokenize(article):
-    tokenizer = load('tokenizers/punkt/{0}.pickle'.format("english"))
+    tokenizer = load('./lib/nltk_data/tokenizers/punkt/{0}.pickle'.format("english"))
     return tokenizer.span_tokenize(article)
     pass
 

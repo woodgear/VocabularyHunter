@@ -1,0 +1,37 @@
+name: Vh Server CI
+
+on: push
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: setup py env
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.6'
+    - name: test
+      run: |
+        cd server
+        ./install.sh
+        ./test.sh
+
+    - name: push to docker hub
+      uses: elgohr/Publish-Docker-Github-Action@master
+      if: startsWith(github.ref,'refs/tags/vh-server-draft-v')
+      with: 
+        name: wucong/vh-server
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        workdir: server
+
+# - name: test
+#     - name: push to docker hub
+#     - name: deplooy to gke
