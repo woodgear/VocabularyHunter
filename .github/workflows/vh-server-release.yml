@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: login docker
       uses: azure/docker-login@v1
-      if: startsWith(github.ref,'refs/tags/vh-server-draft-v')
+      if: startsWith(github.ref,'refs/tags/vh-server-')
       with: 
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
