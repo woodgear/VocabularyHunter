@@ -4,33 +4,38 @@ from db_model import *
 import shutil
 import time
 import datetime
-
+import sys
 import gc
-FOLDER_PATH = "test-db"
+
+sys.path.insert(0, os.path.abspath('./lib/ECDICT'))
+from stardict import convert_dict
+
 
 
 class TestDbModel(unittest.TestCase):
     def setUp(self):
-        print(self.id(),"setUp")
-        test_folder = Path(FOLDER_PATH)
-        if test_folder.exists():
-            print("setUp rmtree")
-            shutil.rmtree(test_folder)
-            print("setUp over")
-        test_folder.mkdir()
-        pass
+        print("setUp")
+        vhDict = "./mock_data/vol/vh-dict"
+        vhUser = "./mock_data/vol/vh-user"
+        os.system('rm -rf ./mock_data/vol')
+        os.makedirs(vhDict)
+        os.makedirs(vhUser)
+
+        mock_dict_sqlite = f"{vhDict}/mock_dict.db"
+        mock_dict_csv = "./mock_data/mock_dict.csv"
+
+        convert_dict(mock_dict_sqlite,mock_dict_csv)   
+        os.environ["STAR_DICT_SQLITE"] = mock_dict_sqlite
+        os.environ["VH_USER_PATH"] = vhUser
+
+        
 
     def tearDown(self):
-        print(self.id(),"tearDown")
-        del self.model
-        test_folder = Path(FOLDER_PATH)
-        if test_folder.exists():
-            shutil.rmtree(test_folder)
-        pass
+        os.system('rm -rf ./mock_data/vol')
     
     def test_db(self):
         print(self.id())
-        self.model = DbModel(folder_path=FOLDER_PATH)
+        self.model = DbModel()
 
         # should get a empty list when it does not has word
         knowWords = self.model.get_all_know_word_by_id("mockId1")
@@ -67,7 +72,7 @@ class TestDbModel(unittest.TestCase):
         pass
     def test_save_article(self):
         print(self.id())
-        self.model = DbModel(folder_path=FOLDER_PATH)
+        self.model = DbModel()
         db = self.model._db()
         now = datetime.datetime(2019, 11, 1, 1, 4, 48)
         raw_article = "123456789"
@@ -94,7 +99,7 @@ class TestDbModel(unittest.TestCase):
         article =  {"article":raw_article,"name":"name","source":"https://xxx.com","type":"website-article",
         "struct":"xxxxx",
         "md5":"md5","time":datetime.datetime.now()}
-        self.model = DbModel(folder_path=FOLDER_PATH)
+        self.model = DbModel()
         corpus_id_1 = self.model.save_article(article)
       
         self.model.connect_user_and_corpus("user_1",corpus_id_1)

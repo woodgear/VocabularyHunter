@@ -16,8 +16,9 @@ class DbModel:
 
     """
 
-    def __init__(self, db_name="vh", folder_path="vol/vh-user"):
+    def __init__(self, db_name="vh"):
         self.db_name = db_name
+        folder_path = os.getenv("VH_USER_PATH") or "./vol/vh-user"
         self.folder_path = folder_path
         self._init_db()
         pass
