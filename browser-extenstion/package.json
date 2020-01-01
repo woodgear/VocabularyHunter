@@ -52,7 +52,7 @@
   "scripts": {
     "build-product": "rm -rf ./dist/* && webpack --env=production",
     "build-dev": "rm -rf ./dist/* &&  webpack --env=development",
-    "release-crx": "npm run build-product && node build/crx.js",
+    "release-crx": "npm run build-product && node build-scripts/crx.js",
     "start": "webpack-dev-server --env webpakc-dev-server",
     "lint": "eslint ./",
     "lint-fix": "eslint  --fix ./",

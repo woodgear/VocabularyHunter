@@ -3,3 +3,4 @@ node_modules
 *.pem
 *.crx
 chrome-linux
+secret
