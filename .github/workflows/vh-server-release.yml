@@ -2,14 +2,8 @@ name: Vh Server CI
 
 on: push
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
     - uses: actions/checkout@v1
 
@@ -23,7 +17,12 @@ jobs:
         ./install.sh
         ./test.sh
         echo ${{ github.ref }}
-
+  push-to-dockerhub:
+    needs: test
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref,'refs/tags/vh-server')
+    steps:
+    - uses: actions/checkout@v1
     - name: login docker
       uses: azure/docker-login@v1
       if: startsWith(github.ref,'refs/tags/vh-server-draft-v')
@@ -37,6 +36,41 @@ jobs:
           cd server
           ./github-ci-push-image.sh ${GITHUB_REF}
 
-# - name: test
-#     - name: push to docker hub
-#     - name: deplooy to gke
+    - name: push release image to dockerhub
+      if: startsWith(github.ref,'refs/tags/vh-server-v')
+      run: |
+          cd server
+          ./github-ci-push-image.sh ${GITHUB_REF}
+
+  deploy-to-gke:
+    needs: push-to-dockerhub
+
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref,'refs/tags/vh-server')
+    env:
+      GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+      GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
+      GKE_ZONE: us-central1-a
+      GKE_CLUSTER: vh-standard-cluster-1
+      IMAGE: gke-test    
+    steps:
+    - uses: actions/checkout@master
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '270.0.0'
+        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_key: ${{ secrets.GKE_KEY }}
+
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '270.0.0'
+        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_key: ${{ secrets.GKE_KEY }}
+
+    - name: deploy to k8s
+      run: |
+        # Set up docker to authenticate
+        # via gcloud command-line tool.
+        gcloud auth configure-docker
+        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
+        ./server/github-ci-deploy-image.sh ${GITHUB_REF}
