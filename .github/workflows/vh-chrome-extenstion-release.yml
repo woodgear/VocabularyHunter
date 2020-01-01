@@ -1,11 +1,6 @@
 name: Vh Chrome Extenstion CI
 
-on: 
-  push:
-    branches:
-      - master
-    tags:
-      - 'vh-chrome-extenstion-v*.*.*'
+on: push
 jobs:
   build:
 
@@ -27,16 +22,29 @@ jobs:
       run: |
         cd browser-extenstion
         npm ci
+        echo "start build crx"
         npm run build-product
+        echo ${{ github.ref }}
+        ls
+        
       env:
         CI: true
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         CHROME_PEM: ${{ secrets.CHROME_PEM }}
 
+    - name: draft-release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref,'refs/tags/vh-chrome-extenstion-draft-v')
+      with:
+          files: vh.crx
+          draft: true
+      env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
     - name: release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'master')
+      if: startsWith(github.ref,'refs/tags/vh-chrome-extenstion-v')
       with:
           files: vh.crx
       env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      
